@@ -1,0 +1,8 @@
+AStar/.gitignore
+.vscode/launch.json
+AStar/AStar.iml
+AStar/.idea/.gitignore
+AStar/.idea/misc.xml
+AStar/.idea/modules.xml
+AStar/.idea/uiDesigner.xml
+AStar/.idea/vcs.xml
