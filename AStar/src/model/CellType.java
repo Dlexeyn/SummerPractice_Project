@@ -9,5 +9,6 @@ public enum CellType{
     BLOCK_TYPE,
     SOURCE_TYPE,
     STOCK_TYPE,
-    PATH_TYPE
+    //PATH_TYPE - с точки зрения модели не нужно
 }
+
