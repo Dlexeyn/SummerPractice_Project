@@ -1,12 +1,10 @@
-import graphics.*;
-
-import javax.swing.*;
+import controller.MainController;
 
 public class Main {
+    private static MainController controller;
     public static void main(String[] args) {
-        View view = new View();
-        SwingUtilities.invokeLater(() -> {
-            view.init();
-        });
+
+        controller = new MainController();
+        controller.start();
     }
 }
