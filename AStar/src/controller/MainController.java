@@ -1,5 +1,7 @@
 package controller;
 
+import javax.swing.*;
+import java.util.*;
 import java.io.IOException;
 import javax.swing.SwingUtilities;
 import graphics.View;
@@ -11,30 +13,32 @@ public class MainController {
     private FieldFacade facade;
     private Reader reader;
 
-    public MainController()
-    {
+    public MainController() {
         reader = new Reader();
+        view = new View();
         gController = new GraphicsController(this);
-        view = new View(gController);
+        view.init(gController);
+        gController.setListenedButtonsArray();
     }
 
-    public void init()
-    {
-        try{
+    public void init() {
+        try {
             reader.read();
             facade = new FieldFacade(reader.getSizeY(), reader.getSizeX(), reader.getField());
-        } 
-        catch(IOException e)
-        {
+        } catch (IOException e) {
             System.out.println("Файл сохранения поврежден или не обнаружен.");
-            facade = new FieldFacade(0, 0);
-        } 
+            facade = new FieldFacade(0, 0); // to do
+        }
     }
 
-    public void start()
-    {
+    public void start() {
         SwingUtilities.invokeLater(() -> {
-            view.init();
+            view.setVisible(true);
         });
+
+    }
+
+    public ArrayList<JButton> getViewButtonPanelArray() {
+        return view.getButtonPanelArray();
     }
 }

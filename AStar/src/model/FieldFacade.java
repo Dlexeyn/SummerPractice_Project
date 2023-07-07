@@ -6,18 +6,14 @@ import java.beans.PropertyChangeSupport;
 import java.util.EnumMap;
 
 public class FieldFacade{
-    private int sizeY, sizeX;
-    private Cell [] [] field;
-    private Cell startCell;
-    private Cell finishCell;
+    private Data fData;
 
     private static EnumMap<CellType, Integer> costTypeMap;
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
 
     public FieldFacade(int sizeY, int sizeX, CellType [][] mapType){
-        this.sizeY = sizeY;
-        this.sizeX = sizeX;
-        this.field = new Cell[sizeY][sizeX];
+        initMap(sizeY, sizeX);
+
         for(int y = 0; y < sizeY; y++){
             for(int x = 0; x < sizeX; x++)
             {
@@ -29,19 +25,24 @@ public class FieldFacade{
                     setFinish(x, y);
             }
         }
-
         // init EnumMap
         initEnumMap();
     }
 
     public FieldFacade(int sizeY, int sizeX){
-        this.sizeY = sizeY;
-        this.sizeX = sizeX;
-        this.field = new Cell[sizeY][sizeX];
+
         costTypeMap = new EnumMap<>(CellType.class);
 
         // init EnumMap
         initEnumMap();
+    }
+
+    private void initMap(int sizeY, int sizeX)
+    {
+        fData = new Data();
+        fData.setSizeY(sizeY);
+        fData.setSizeX(sizeX);
+        fData.setField(new Cell[sizeY][sizeX]);
     }
 
     private void initEnumMap()
@@ -65,55 +66,46 @@ public class FieldFacade{
         support.removePropertyChangeListener(pListener);
     }
 
-    public Cell [] [] getField(){
-        return field;
+    public void notify(Data data)
+    {
+        support.firePropertyChange("FieldData", null, data);
     }
 
     // Оповестить визуализацию
     public void resize(int sizeY, int sizeX)
     {
-        this.sizeY = sizeY;
-        this.sizeX = sizeX;
-        this.field = new Cell[sizeY][sizeX];
+        initMap(sizeY, sizeX);
     }
 
     // Оповестить визуализацию
     public void changeVertex(int posX, int posY, CellType newType)
     {
-        field[posY][posX].setgCost(costTypeMap.get(newType));
+        fData.getField()[posY][posX].setgCost(costTypeMap.get(newType));
     }
     // Оповестить визуализацию
     public void setFinish(int posX, int posY)
     {
-        if(finishCell != null)
-            finishCell.setgCost(1);
+        if(fData.getFinishCell() != null)
+            fData.getFinishCell() .setgCost(1);
 
-        field[posY][posX].setgCost(costTypeMap.get(CellType.STOCK_TYPE));
-        finishCell = field[posY][posX];
+        fData.getField()[posY][posX].setgCost(costTypeMap.get(CellType.STOCK_TYPE));
+        fData.setFinishCell(fData.getField()[posY][posX]);
     }
 
     // Оповестить визуализацию
     public void setStart(int posX, int posY)
     {
-        if(startCell != null)
-            startCell.setgCost(1);
+        if(fData.getStartCell() != null)
+            fData.getStartCell().setgCost(1);
 
-        field[posY][posX].setgCost(costTypeMap.get(CellType.SOURCE_TYPE));
-        startCell = field[posY][posX];
+        fData.getField()[posY][posX].setgCost(costTypeMap.get(CellType.SOURCE_TYPE));
+        fData.setStartCell(fData.getField()[posY][posX]);
     }
 
     // Оповестить визуализацию
     public void startAlgorithm()
     {
 
-    }
-
-    public int getSizeY() {
-        return sizeY;
-    }
-
-    public int getSizeX() {
-        return sizeX;
     }
 
 

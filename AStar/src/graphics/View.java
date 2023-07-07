@@ -3,7 +3,7 @@ package graphics;
 import java.util.*;
 
 import javax.swing.*;
-import static javax.swing.GroupLayout.Alignment.*; 
+import static javax.swing.GroupLayout.Alignment.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,9 +11,9 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 import model.CellType;
+import model.Data;
 
-
-public class View extends JFrame implements PropertyChangeListener{
+public class View extends JFrame implements PropertyChangeListener {
 
     static final int MAX_ROW = 15;
     private static final int MAX_COLUMN = 25;
@@ -22,17 +22,17 @@ public class View extends JFrame implements PropertyChangeListener{
     private GeneralListener generalListener;
     private ChooseColorListener chooseColorListener;
 
-    CellViewer [][] cellsViewers = new CellViewer[MAX_ROW][MAX_COLUMN];
+    CellViewer[][] cellsViewers = new CellViewer[MAX_ROW][MAX_COLUMN];
     private JPanel graphPanel;
     JPanel buttonPanel;
     JPanel colorsPanel;
     JPanel textPanel;
-    
+
     JMenuBar menuBar;
     JMenu menuFile;
     JButton toolSave;
     JButton toolLoad;
-    
+
     JButton buttonChooseColor;
     JButton buttonReset;
     JButton buttonSetSize;
@@ -49,26 +49,16 @@ public class View extends JFrame implements PropertyChangeListener{
 
     JTextArea outText;
 
-    GroupLayout viewLayout;   
+    GroupLayout viewLayout;
 
-    ArrayList<JButton> arrayOfPanel;
-    ArrayList<JToggleButton> arrayOfColorButtons;
+    ArrayList<JButton> buttonPanelArray;
+    ArrayList<JToggleButton> colorButtonPanelArray;
 
-    
     private static EnumMap<CellType, Colors> colorTypeMap;
 
-    public void init()
-    {
+    public void init(ActionListener aListener) {
         setTitle("Визуализация А*");
-        pack();
-        setVisible(true);
-        setMinimumSize(new Dimension(this.getWidth(), this.getHeight()));
-    }
-    
-    public View(ActionListener aListener) {
-        generalListener = new GeneralListener();
-        chooseColorListener = new ChooseColorListener();
-
+        
         initGraphPanel();
         prepareButtonPanel(aListener);
         prepareColorsPanel();
@@ -82,28 +72,39 @@ public class View extends JFrame implements PropertyChangeListener{
         this.getContentPane().setLayout(viewLayout);
 
         viewLayout.setHorizontalGroup(viewLayout.createSequentialGroup()
-                                        .addGroup(viewLayout.createParallelGroup(LEADING)
-                                                        .addComponent(graphPanel)
-                                                        .addGap(20, 30, 40)
-                                                        .addComponent(textPanel))
-                                        .addGroup(viewLayout.createParallelGroup(LEADING)
-                                                        .addComponent(buttonPanel)
-                                                        .addGap(20, 30, 40)
-                                                        .addComponent(colorsPanel))                                                        
-        );
-        
+                .addGroup(viewLayout.createParallelGroup(LEADING)
+                        .addComponent(graphPanel)
+                        .addGap(20, 30, 40)
+                        .addComponent(textPanel))
+                .addGroup(viewLayout.createParallelGroup(LEADING)
+                        .addComponent(buttonPanel)
+                        .addGap(20, 30, 40)
+                        .addComponent(colorsPanel)));
+
         viewLayout.setVerticalGroup(viewLayout.createSequentialGroup()
-                                      .addGroup(viewLayout.createParallelGroup(LEADING)
-                                                      .addComponent(graphPanel)
-                                                      .addGap(20, 30, 40)
-                                                      .addComponent(buttonPanel))
-                                      .addGroup(viewLayout.createParallelGroup(LEADING)
-                                                      .addComponent(textPanel)
-                                                      .addGap(20, 30, 40)
-                                                      .addComponent(colorsPanel))
-        );
-        viewLayout.setAutoCreateGaps(true); 
+                .addGroup(viewLayout.createParallelGroup(LEADING)
+                        .addComponent(graphPanel)
+                        .addGap(20, 30, 40)
+                        .addComponent(buttonPanel))
+                .addGroup(viewLayout.createParallelGroup(LEADING)
+                        .addComponent(textPanel)
+                        .addGap(20, 30, 40)
+                        .addComponent(colorsPanel)));
+        viewLayout.setAutoCreateGaps(true);
         viewLayout.setAutoCreateContainerGaps(true);
+        pack();
+        //setVisible(true);
+        setMinimumSize(new Dimension(this.getWidth(), this.getHeight()));
+    }
+
+    public View() {
+        generalListener = new GeneralListener();
+        chooseColorListener = new ChooseColorListener();
+    }
+
+    public void start()
+    {
+
     }
 
     public void initGraphPanel() {
@@ -111,24 +112,24 @@ public class View extends JFrame implements PropertyChangeListener{
         colorTypeMap = new EnumMap<>(CellType.class);
 
         int index = 0;
-        for(Colors color : Colors.values())
+        for (Colors color : Colors.values())
             colorTypeMap.put(types.get(index++), color);
 
         graphPanel = new JPanel(new GridLayout(MAX_ROW, MAX_COLUMN));
         graphPanel.setBorder(BorderFactory.createLineBorder(Color.GRAY, 5, false));
 
-        for(int row = 0; row < MAX_ROW; row++){
-            for(int col = 0; col < MAX_COLUMN; col++){
+        for (int row = 0; row < MAX_ROW; row++) {
+            for (int col = 0; col < MAX_COLUMN; col++) {
                 cellsViewers[row][col] = new CellViewer(row, col);
                 graphPanel.add(cellsViewers[row][col]);
             }
         }
     }
 
-    public void prepareButtonPanel(ActionListener aListener){
+    public void prepareButtonPanel(ActionListener aListener) {
         Dimension buttonSize = new Dimension(140, 80);
 
-        arrayOfPanel = new ArrayList<JButton>();
+        buttonPanelArray = new ArrayList<JButton>();
         buttonReset = new JButton("Сброс");
         buttonReset.setPreferredSize(buttonSize);
         buttonSetSize = new JButton("Изменить размер");
@@ -141,46 +142,48 @@ public class View extends JFrame implements PropertyChangeListener{
         buttonForward = new JButton("Шаг вперёд");
         buttonForward.setPreferredSize(buttonSize);
 
-        buttonPanel =  new JPanel(new GridLayout(7, 1, 0, 20));
+        buttonPanel = new JPanel(new GridLayout(7, 1, 0, 20));
 
-        arrayOfPanel.add(buttonChooseColor);
-        arrayOfPanel.add(buttonReset);
-        arrayOfPanel.add(buttonSetSize);
-        arrayOfPanel.add(buttonLaunch);
-        arrayOfPanel.add(buttonForward);
-        
-        arrayOfPanel.forEach((button) -> {
+        buttonPanelArray.add(buttonChooseColor);
+        buttonPanelArray.add(buttonReset);
+        buttonPanelArray.add(buttonSetSize);
+        buttonPanelArray.add(buttonLaunch);
+        buttonPanelArray.add(buttonForward);
+
+        buttonPanelArray.forEach((button) -> {
             buttonPanel.add(button);
             button.addActionListener(generalListener);
             button.addActionListener(aListener);
         });
-        
+
     }
 
-    public void prepareColorsPanel()
-    {
-        arrayOfColorButtons = new ArrayList<>();
+    public void prepareColorsPanel() {
+        colorButtonPanelArray = new ArrayList<>();
         button_WHITE_WITH_YELLOW = new JToggleButton("1", false);
         button_WHITE_WITH_YELLOW.setBackground(Colors.WHITE_WITH_YELLOW.getColor());
-        button_WHITE_WITH_YELLOW.setBorder(BorderFactory.createLineBorder(Colors.WHITE_WITH_YELLOW.getColor(), 3, true));
-        //button_WHITE_WITH_YELLOW.setMnemonic(KeyEvent.VK_B);
-        //button_WHITE_WITH_YELLOW.setSelected(true);
+        button_WHITE_WITH_YELLOW
+                .setBorder(BorderFactory.createLineBorder(Colors.WHITE_WITH_YELLOW.getColor(), 3, true));
+        // button_WHITE_WITH_YELLOW.setMnemonic(KeyEvent.VK_B);
+        // button_WHITE_WITH_YELLOW.setSelected(true);
         button_LIGHT_YELLOW = new JToggleButton("2", false);
         button_LIGHT_YELLOW.setBackground(Colors.LIGHT_YELLOW.getColor());
         button_LIGHT_YELLOW.setBorder(BorderFactory.createLineBorder(Colors.LIGHT_YELLOW.getColor(), 3, true));
-        //button_LIGHT_YELLOW.setSelected(true);
+        // button_LIGHT_YELLOW.setSelected(true);
         button_ORANGE = new JToggleButton("3", false);
         button_ORANGE.setBackground(Colors.ORANGE.getColor());
-        button_ORANGE.setBorder(BorderFactory.createLineBorder(Colors.ORANGE.getColor(), 3, true));;
-        //button_ORANGE.setSelected(true);
+        button_ORANGE.setBorder(BorderFactory.createLineBorder(Colors.ORANGE.getColor(), 3, true));
+        ;
+        // button_ORANGE.setSelected(true);
         button_DARK_ORANGE = new JToggleButton("4", false);
         button_DARK_ORANGE.setBackground(Colors.DARK_ORANGE.getColor());
-        button_DARK_ORANGE.setBorder(BorderFactory.createLineBorder(Colors.DARK_ORANGE.getColor(), 3, true));;
-        //button_DARK_ORANGE.setSelected(true);
+        button_DARK_ORANGE.setBorder(BorderFactory.createLineBorder(Colors.DARK_ORANGE.getColor(), 3, true));
+        ;
+        // button_DARK_ORANGE.setSelected(true);
         button_BROWN = new JToggleButton("5", false);
         button_BROWN.setBackground(Colors.BROWN.getColor());
         button_BROWN.setBorder(BorderFactory.createLineBorder(Colors.BROWN.getColor(), 3, true));
-        //button_BROWN.setSelected(true);
+        // button_BROWN.setSelected(true);
         button_GREY = new JToggleButton("Stone", false);
         button_GREY.setBackground(Colors.GREY.getColor());
         button_GREY.setBorder(BorderFactory.createLineBorder(Colors.GREY.getColor(), 3, true));
@@ -188,32 +191,31 @@ public class View extends JFrame implements PropertyChangeListener{
         buttonPosStart = new JToggleButton("Старт", false);
         buttonPosStart.setBackground(Color.GREEN);
         buttonPosStart.setBorder(BorderFactory.createLineBorder(Color.GREEN, 3, true));
-        
+
         buttonPosFinish = new JToggleButton("Финиш", false);
         buttonPosFinish.setBackground(Color.RED);
         buttonPosFinish.setBorder(BorderFactory.createLineBorder(Color.RED, 3, true));
 
-
-        arrayOfColorButtons.add(button_WHITE_WITH_YELLOW);
-        arrayOfColorButtons.add(button_LIGHT_YELLOW);
-        arrayOfColorButtons.add(button_ORANGE);
-        arrayOfColorButtons.add(button_DARK_ORANGE);
-        arrayOfColorButtons.add(button_BROWN);
-        arrayOfColorButtons.add(button_GREY);
-        arrayOfColorButtons.add(buttonPosStart);
-        arrayOfColorButtons.add(buttonPosFinish);
+        colorButtonPanelArray.add(button_WHITE_WITH_YELLOW);
+        colorButtonPanelArray.add(button_LIGHT_YELLOW);
+        colorButtonPanelArray.add(button_ORANGE);
+        colorButtonPanelArray.add(button_DARK_ORANGE);
+        colorButtonPanelArray.add(button_BROWN);
+        colorButtonPanelArray.add(button_GREY);
+        colorButtonPanelArray.add(buttonPosStart);
+        colorButtonPanelArray.add(buttonPosFinish);
 
         colorsPanel = new JPanel(new GridLayout(2, 4, 20, 20));
         colorsPanel.setBorder(BorderFactory.createLineBorder(Color.GRAY, 3, false));
 
-        arrayOfColorButtons.forEach((button) -> {
+        colorButtonPanelArray.forEach((button) -> {
             colorsPanel.add(button);
             button.addActionListener(generalListener);
         });
 
     }
 
-    private void prepareMenuBar(){
+    private void prepareMenuBar() {
 
         menuBar = new JMenuBar();
         toolSave = new JButton("Сохранить");
@@ -223,7 +225,7 @@ public class View extends JFrame implements PropertyChangeListener{
 
     }
 
-    private void prepareTextPanel(){
+    private void prepareTextPanel() {
         // JTextArea area1 = new JTextArea("Многострочное поле", 8, 10);
         // // Шрифт и табуляция
         // area1.setFont(new Font("Dialog", Font.PLAIN, 14));
@@ -235,57 +237,59 @@ public class View extends JFrame implements PropertyChangeListener{
         outText.setTabSize(10);
         outText.setEditable(false);
         outText.setBorder(BorderFactory.createLineBorder(Color.GRAY, 3, false));
-        //textPanel.setBorder(BorderFactory.createLineBorder(Color.GRAY, 3, false));
+        // textPanel.setBorder(BorderFactory.createLineBorder(Color.GRAY, 3, false));
         textPanel.add(outText, BorderLayout.CENTER);
-        //outText.sh
+        // outText.sh
         // outText.setBounds(50,100,200,30);
-        colorsPanel.setVisible(false); //исчезновение
+        colorsPanel.setVisible(false); // исчезновение
     }
 
-    private class GeneralListener implements ActionListener{
+    private class GeneralListener implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            arrayOfColorButtons.forEach((button) -> {
-                if(button != e.getSource())
+            colorButtonPanelArray.forEach((button) -> {
+                if (button != e.getSource())
                     button.setSelected(false);
             });
         }
 
     }
 
-    public class ChooseColorListener implements ActionListener{
+    private class ChooseColorListener implements ActionListener {
 
         private boolean isPressed = false;
+
         @Override
         public void actionPerformed(ActionEvent e) {
-            if(isPressed == false)
-            {
+            if (isPressed == false) {
                 colorsPanel.setVisible(true);
                 buttonChooseColor.setText("Закончить редактирование");
-                arrayOfPanel.forEach((button) -> {
-                    if(button != buttonChooseColor)
+                buttonPanelArray.forEach((button) -> {
+                    if (button != buttonChooseColor)
                         button.setEnabled(false);
                 });
-            }
-            else
-            {
+            } else {
                 buttonChooseColor.setText("Редактировать");
                 colorsPanel.setVisible(false);
-                arrayOfPanel.forEach((button) -> {
-                    if(button != buttonChooseColor)
+                buttonPanelArray.forEach((button) -> {
+                    if (button != buttonChooseColor)
                         button.setEnabled(true);
                 });
             }
             isPressed = isPressed ^ true;
             pack();
         }
-    
+
     }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'propertyChange'");
+        Data newData = (Data) evt.getNewValue();
+
+    }
+
+    public ArrayList<JButton> getButtonPanelArray() {
+        return buttonPanelArray;
     }
 }
