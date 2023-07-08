@@ -2,15 +2,16 @@ package model;
 
 public class Data {
     private int sizeY, sizeX;
-    private Cell [] [] field;
+    private Cell[][] field;
     private Cell startCell;
     private Cell finishCell;
 
-    public Data(int sizeX, int sizeY){
+    public Data(int sizeX, int sizeY) {
         this.sizeX = sizeX;
         this.sizeY = sizeY;
         field = new Cell[sizeY][sizeX];
     }
+
     public int getSizeY() {
         return sizeY;
     }
@@ -46,7 +47,7 @@ public class Data {
     public Cell getFinishCell() {
         return finishCell;
     }
-    
+
     public void setFinishCell(Cell finishCell) {
         this.finishCell = finishCell;
     }

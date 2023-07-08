@@ -1,7 +1,9 @@
-package graphics;
+package view;
 
 import javax.swing.*;
 import java.awt.*;
+
+import controller.MainController;
 
 public class DialogSizeInput {
 
@@ -15,7 +17,9 @@ public class DialogSizeInput {
     JLabel label;
     JButton buttonOk;
 
-    public DialogSizeInput() {
+    MainController controller;
+
+    public DialogSizeInput(MainController controller) {
 
         frame = new JFrame("Ввод размеров графа");
         frame.setLayout(new BorderLayout());
@@ -30,20 +34,21 @@ public class DialogSizeInput {
         labelPanel.add(label, BorderLayout.NORTH);
 
         textFieldPanel = new JPanel(new GridLayout(2, 2));
-        textFieldPanel.add(new JLabel("Height: "));
+        textFieldPanel.add(new JLabel("Y: "));
         textFieldPanel.add(yTextField);
-        textFieldPanel.add(new JLabel("Width: "));
+        textFieldPanel.add(new JLabel("X: "));
         textFieldPanel.add(xTextField);
         labelPanel.add(textFieldPanel, BorderLayout.CENTER);
 
         buttonOk = new JButton("OK");
-        // buttonOk.addActionListener(e -> {
-        //     int height = Integer.parseInt(yTextField.getText());
-        //     int width = Integer.parseInt(xTextField.getText());
-        //     frame.dispose(); // Close the dialog window
-        // });
-        labelPanel.add(buttonOk, BorderLayout.SOUTH);
+        buttonOk.addActionListener(e -> {
+            int height = Integer.parseInt(yTextField.getText());
+            int width = Integer.parseInt(xTextField.getText());
+            controller.getFacade().resize(height, width);
+            frame.dispose(); // Close the dialog window
 
+        });
+        labelPanel.add(buttonOk, BorderLayout.SOUTH);
 
         frame.setSize(300, 150);
         frame.setVisible(true);

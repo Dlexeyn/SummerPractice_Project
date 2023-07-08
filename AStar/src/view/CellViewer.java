@@ -1,4 +1,4 @@
-package graphics;
+package view;
 
 import model.*;
 import javax.swing.*;
@@ -21,8 +21,21 @@ public class CellViewer extends JButton {
 
     public void setTypeColor(Color color){
         setBackground(color);
+        this.updateUI();
     }
 
+    public void addParams(int g, int h, int f)
+    {
+        this.setText("");
+    }
+
+    public int getRow() {
+        return row;
+    }
+
+    public int getColumn() {
+        return column;
+    }
 }
 
 

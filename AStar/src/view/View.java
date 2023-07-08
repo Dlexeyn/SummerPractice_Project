@@ -1,4 +1,4 @@
-package graphics;
+package view;
 
 import java.util.*;
 
@@ -15,15 +15,12 @@ import model.Data;
 
 public class View extends JFrame implements PropertyChangeListener {
 
-    static final int MAX_ROW = 15;
-    private static final int MAX_COLUMN = 25;
     static final int COLOR_COUNT = 9;
 
     private GeneralListener generalListener;
     private ChooseColorListener chooseColorListener;
 
-    CellViewer[][] cellsViewers = new CellViewer[MAX_ROW][MAX_COLUMN];
-    private JPanel graphPanel;
+    private GraphPanel graphPanel;
     JPanel buttonPanel;
     JPanel colorsPanel;
     JPanel textPanel;
@@ -54,20 +51,23 @@ public class View extends JFrame implements PropertyChangeListener {
     ArrayList<JButton> buttonPanelArray;
     ArrayList<JToggleButton> colorButtonPanelArray;
 
-    private static EnumMap<CellType, Colors> colorTypeMap;
-
     public void init(ActionListener aListener) {
         setTitle("Визуализация А*");
-        
-        initGraphPanel();
+
+        // graphPanel.init(GraphPanel.MAX_ROW, GraphPanel.MAX_COLUMN); // придумать
+        // размеры по умолчанию или получить от контролера
         prepareButtonPanel(aListener);
         prepareColorsPanel();
         prepareMenuBar();
         prepareTextPanel();
-
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setJMenuBar(menuBar);
+        setupLayout();
+        pack();
+        setMinimumSize(new Dimension(this.getWidth(), this.getHeight()));
+    }
 
+    private void setupLayout() {
         viewLayout = new GroupLayout(this.getContentPane());
         this.getContentPane().setLayout(viewLayout);
 
@@ -92,38 +92,16 @@ public class View extends JFrame implements PropertyChangeListener {
                         .addComponent(colorsPanel)));
         viewLayout.setAutoCreateGaps(true);
         viewLayout.setAutoCreateContainerGaps(true);
-        pack();
-        //setVisible(true);
-        setMinimumSize(new Dimension(this.getWidth(), this.getHeight()));
     }
 
     public View() {
         generalListener = new GeneralListener();
         chooseColorListener = new ChooseColorListener();
+        graphPanel = new GraphPanel();
     }
 
-    public void start()
-    {
+    public void start() {
 
-    }
-
-    public void initGraphPanel() {
-        ArrayList<CellType> types = new ArrayList<CellType>(EnumSet.allOf(CellType.class));
-        colorTypeMap = new EnumMap<>(CellType.class);
-
-        int index = 0;
-        for (Colors color : Colors.values())
-            colorTypeMap.put(types.get(index++), color);
-
-        graphPanel = new JPanel(new GridLayout(MAX_ROW, MAX_COLUMN));
-        graphPanel.setBorder(BorderFactory.createLineBorder(Color.GRAY, 5, false));
-
-        for (int row = 0; row < MAX_ROW; row++) {
-            for (int col = 0; col < MAX_COLUMN; col++) {
-                cellsViewers[row][col] = new CellViewer(row, col);
-                graphPanel.add(cellsViewers[row][col]);
-            }
-        }
     }
 
     public void prepareButtonPanel(ActionListener aListener) {
@@ -156,6 +134,10 @@ public class View extends JFrame implements PropertyChangeListener {
             button.addActionListener(aListener);
         });
 
+    }
+
+    public GraphPanel getGraphPanel() {
+        return graphPanel;
     }
 
     public void prepareColorsPanel() {
@@ -284,12 +266,22 @@ public class View extends JFrame implements PropertyChangeListener {
     }
 
     @Override
-    public void propertyChange(PropertyChangeEvent evt) {
-        Data newData = (Data) evt.getNewValue();
+    public void propertyChange(PropertyChangeEvent e) {
+        Data newData = (Data) e.getNewValue();
+        if (e.getPropertyName().equals(new String("Size"))) {
+            graphPanel.init(newData.getSizeX(), newData.getSizeY());
+            pack();
+            setMinimumSize(new Dimension(this.getWidth(), this.getHeight()));
+        }
 
     }
 
     public ArrayList<JButton> getButtonPanelArray() {
         return buttonPanelArray;
+    }
+
+    
+    public ArrayList<JToggleButton> getColorButtonPanelArray() {
+        return colorButtonPanelArray;
     }
 }

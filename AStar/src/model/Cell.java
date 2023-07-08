@@ -1,10 +1,13 @@
 package model;
 
 
-class Cell{
+public class Cell{
 
     Cell parentCell;
 
+    private int posX;
+    private int posY;
+    private int selfCost;
     private int gCost;
     private int hCost;
     private int fCost;
@@ -42,6 +45,14 @@ class Cell{
     public boolean isFinish()
     {
         return finish;
+    }
+
+    public int getPosX() {
+        return posX;
+    }
+
+    public int getPosY() {
+        return posY;
     }
 
     public static int getHeuristicValue(int x, int y)

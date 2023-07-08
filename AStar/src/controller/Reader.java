@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class Reader{
     private int sizeX, sizeY;
     private CellType [][] field;
-    private static final String NAME_FILE = "save.txt";
+    private static final String NAME_FILE = System.getProperty("user.dir") + "/save.txt";
 
     public int getSizeX(){
         return sizeX;
@@ -20,9 +20,9 @@ public class Reader{
 
     public CellType [][] getField(){
         return field;
-    }
-    
-    public void read() throws IOException{
+    }                  
+
+      public void read() throws IOException {
         BufferedReader br = null;
         br = new BufferedReader(new FileReader(NAME_FILE));
         String line = "";
@@ -31,6 +31,8 @@ public class Reader{
             text.add(line);
         }
         if(text.size()>1){
+            CheckCharInt(text.get(0));
+            CheckCharInt(text.get(1));
             sizeY = Integer.parseInt(text.get(0));
             sizeX = Integer.parseInt(text.get(1));
             field = new CellType[sizeY][sizeX];
@@ -41,12 +43,32 @@ public class Reader{
                             field[i-2][j] =inverse(Character.toLowerCase(text.get(i).charAt(j)));
                         }
                     }
+                    else{
+                        System.out.println("Не хватает столбцов");
+                        throw new IOException();
+                    }
                 }
             }
+            else{
+                System.out.println("Не хватает строчек");
+                throw new IOException();
+            }
+        }
+        else{
+            System.out.println("Не хватает строчек");
+            throw new IOException();
         }
 
     }
-    public CellType inverse (char c){
+    public void CheckCharInt (String s) throws IOException{
+        for (int i = 0; i<s.length();i++){
+            if(!(s.charAt(i)>='0' && s.charAt(i)<='9')){
+                System.out.println("Число " +s+" введено не правильно");
+                throw new IOException();
+            }
+        }
+    }
+    public CellType inverse (char c) throws IOException{
         switch(c){
             case '0':
                 return CellType.BLOCK_TYPE;
@@ -65,7 +87,8 @@ public class Reader{
             case 'f':
                 return CellType.STOCK_TYPE;
         }
-        return CellType.FIRST_TYPE;
+        System.out.println("Неправильный символ"+ c);
+        throw new IOException();
     }
 
 }

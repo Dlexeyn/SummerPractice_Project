@@ -5,7 +5,7 @@ import java.awt.event.ActionListener;
 import java.util.*;
 import javax.swing.*;
 
-import graphics.DialogSizeInput;
+import view.DialogSizeInput;
 
 public class GraphicsController implements ActionListener {
 
@@ -24,26 +24,38 @@ public class GraphicsController implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        iterator = 0;
+        iterator = -1;
         listenedButtonsArray.forEach((button) -> {
-            if (e.getSource() == button && iterator == 0) {
+            iterator += 1;
+            if (e.getSource() == button && iterator == 0) { // change color
 
-            } else if (e.getSource() == button && iterator == 1) {
+            } else if (e.getSource() == button && iterator == 1) { // reset
 
-            } else if (e.getSource() == button && iterator == 2) {
+            } else if (e.getSource() == button && iterator == 2) { // resize
                 changeSizeField();
-            } else if (e.getSource() == button && iterator == 3) {
+            } else if (e.getSource() == button && iterator == 3) { // launch
 
-            } else if (e.getSource() == button && iterator == 4) {
+            } else if (e.getSource() == button && iterator == 4) { // forward
 
             }
-            iterator += 1;
         });
 
     }
 
+    private void setStateButtons(boolean state) {
+        listenedButtonsArray.forEach((button) -> {
+            button.setEnabled(state);
+        });
+    }
+
     private void changeSizeField() {
-        DialogSizeInput dialog = new DialogSizeInput();
+        setStateButtons(false);
+        DialogSizeInput dialog = new DialogSizeInput(controller);
         dialog.init();
+        setStateButtons(true);
+    }
+
+    private void resetField() {
+        
     }
 }
