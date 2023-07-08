@@ -11,6 +11,7 @@ import java.util.EnumSet;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
+import model.Cell;
 import model.CellType;
 import model.Data;
 
@@ -25,25 +26,41 @@ public class GraphPanel extends JPanel implements PropertyChangeListener  {
 
     public GraphPanel() {
         colorTypeMap = new EnumMap<>(CellType.class);
-    }
-
-    public void init(int sizeX, int sizeY) {
         ArrayList<CellType> types = new ArrayList<CellType>(EnumSet.allOf(CellType.class));
-        removeAll();
-        cellsViewers = new CellViewer[sizeY][sizeX];
         int index = 0;
         for (Colors color : Colors.values())
             colorTypeMap.put(types.get(index++), color);
+    }
 
-        setLayout(new GridLayout(sizeY, sizeX));
-        setBorder(BorderFactory.createLineBorder(Color.GRAY, 5, false));
-
+    public void defaultSetup(int sizeX, int sizeY){
+        removeAll();
+        cellsViewers = new CellViewer[sizeY][sizeX];
         for (int row = 0; row < sizeY; row++) {
             for (int col = 0; col < sizeX; col++) {
                 cellsViewers[row][col] = new CellViewer(row, col);
                 add(cellsViewers[row][col]);
             }
         }
+        setLayout(new GridLayout(sizeY, sizeX));
+        setBorder(BorderFactory.createLineBorder(Color.GRAY, 5, false));
+
+        updateUI();
+    }
+
+    public void setupFromField(int sizeX, int sizeY, Cell[][] newfield){
+        removeAll();
+        cellsViewers = new CellViewer[sizeY][sizeX];
+        for (int row = 0; row < sizeY; row++) {
+            for (int col = 0; col < sizeX; col++) {
+                CellViewer cellViewer = new CellViewer(row, col);
+                cellViewer.setTypeColor(colorTypeMap.get(newfield[row][col].getType()).getColor());
+                cellsViewers[row][col] = cellViewer;
+                add(cellsViewers[row][col]);
+            }
+        }
+        setLayout(new GridLayout(sizeY, sizeX));
+        setBorder(BorderFactory.createLineBorder(Color.GRAY, 5, false));
+
         updateUI();
     }
 
@@ -60,7 +77,10 @@ public class GraphPanel extends JPanel implements PropertyChangeListener  {
                 finish.setTypeColor(colorTypeMap.get(CellType.FIRST_TYPE).getColor());
 
             finish = cellsViewers[newData.getFinishCell().getPosY()][newData.getFinishCell().getPosX()];
-        } //else if (e.getPropertyName() == colorsPanel)
+        } else if (e.getPropertyName().equals(new String("Vertex"))){
+            Cell updatedCell = newData.getUpdatedCell();
+            cellsViewers[updatedCell.getPosY()][updatedCell.getPosX()].setTypeColor(colorTypeMap.get(updatedCell.getType()).getColor());
+        }
 
     }
 

@@ -4,22 +4,25 @@ import javax.swing.*;
 import java.util.*;
 import java.io.IOException;
 
+import model.CellType;
 import view.View;
 import model.FieldFacade;
 
 public class MainController {
     private View view;
     private GraphicsController gController;
+    private ColorsController colorsController;
     private FieldFacade facade;
-
     private Reader reader;
 
     public MainController() {
         reader = new Reader();
         view = new View();
         gController = new GraphicsController(this);
-        view.init(gController);
+        colorsController = new ColorsController(this);
+        view.init(gController, colorsController);
         gController.setListenedButtonsArray();
+        colorsController.setListenedButtonsArray();
     }
 
     public void init() {
@@ -32,18 +35,21 @@ public class MainController {
         } finally {
             facade.addPropertyChangeListener(view);
             facade.addPropertyChangeListener(view.getGraphPanel());
+            facade.notify("Field", facade.getfData());
         }
-        facade.notify("Size", facade.getfData());
-
     }
 
     public void start() {
         SwingUtilities.invokeLater(() -> {
             view.setVisible(true);
         });
-
     }
 
+    public void changeStateVertex(int posX, int posY, CellType newType){
+        facade.changeVertex(posX, posY, newType);
+        facade.getfData().setUpdatedCell(posX, posY);
+        facade.notify("Vertex", facade.getfData());
+    }
     public FieldFacade getFacade() {
         return facade;
     }

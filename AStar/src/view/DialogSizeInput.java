@@ -41,6 +41,8 @@ public class DialogSizeInput {
         labelPanel.add(textFieldPanel, BorderLayout.CENTER);
 
         buttonOk = new JButton("OK");
+
+        // Перенести слушателя в контроллеры
         buttonOk.addActionListener(e -> {
             int height = Integer.parseInt(yTextField.getText());
             int width = Integer.parseInt(xTextField.getText());

@@ -10,18 +10,24 @@ import model.CellType;
 
 import view.CellViewer;
 
-public class ColorsController {
+public class ColorsController implements ActionListener{
 
     ArrayList<JToggleButton> listenedColorButtons;
+
+    MainController controller;
 
     private CellType cellType;
     private VertexListener vListener;
     private ChoiceListener cListener;
 
     public ColorsController(MainController controller) {
+        this.controller = controller;
         cListener = new ChoiceListener();
         vListener = new VertexListener(controller);
-        this.listenedColorButtons = controller.getViewColorButtonPanelArray();
+    }
+
+    public void setListenedButtonsArray() {
+        listenedColorButtons = controller.getViewColorButtonPanelArray();
     }
 
     public void setCellType(CellType cellType){
@@ -29,6 +35,14 @@ public class ColorsController {
     }
     public CellType getCellType(){
         return cellType;
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        listenedColorButtons.forEach((button) -> {
+            if (button != e.getSource())
+                button.setSelected(false);
+        });
     }
 
 
@@ -73,7 +87,8 @@ public class ColorsController {
         @Override
         public void actionPerformed(ActionEvent e) {
             CellViewer cellViewer = (CellViewer) e.getSource();
-            controller.getFacade().changeVertex(cellViewer.getColumn(),cellViewer.getRow(), getCellType());
+            controller.changeStateVertex(cellViewer.getColumn(),cellViewer.getRow(), getCellType());
+            //controller.getFacade().changeVertex(cellViewer.getColumn(),cellViewer.getRow(), getCellType());
         }
 
     }

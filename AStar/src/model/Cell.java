@@ -4,7 +4,7 @@ package model;
 public class Cell{
 
     Cell parentCell;
-
+    private CellType type;
     private int posX;
     private int posY;
     private int selfCost;
@@ -19,6 +19,7 @@ public class Cell{
         start = false;
         finish = false;
         gCost = 1;
+        type = CellType.FIRST_TYPE;
     }
 
     public Cell getParentCell() {
@@ -53,6 +54,13 @@ public class Cell{
 
     public int getPosY() {
         return posY;
+    }
+
+    public CellType getType() {
+        return type;
+    }
+    public void setType(CellType type) {
+        this.type = type;
     }
 
     public static int getHeuristicValue(int x, int y)

@@ -75,7 +75,9 @@ public class FieldFacade {
 
     // Оповестить визуализацию
     public void changeVertex(int posX, int posY, CellType newType) {
-        fData.getField()[posY][posX].setgCost(costTypeMap.get(newType));
+        Cell cell = fData.getField()[posY][posX];
+        cell.setgCost(costTypeMap.get(newType));
+        cell.setType(newType);
     }
 
     // Оповестить визуализацию

@@ -51,13 +51,15 @@ public class View extends JFrame implements PropertyChangeListener {
     ArrayList<JButton> buttonPanelArray;
     ArrayList<JToggleButton> colorButtonPanelArray;
 
-    public void init(ActionListener aListener) {
+    public void init(ActionListener aListener, ActionListener cListener) {
         setTitle("Визуализация А*");
+
+
 
         // graphPanel.init(GraphPanel.MAX_ROW, GraphPanel.MAX_COLUMN); // придумать
         // размеры по умолчанию или получить от контролера
         prepareButtonPanel(aListener);
-        prepareColorsPanel();
+        prepareColorsPanel(cListener);
         prepareMenuBar();
         prepareTextPanel();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -140,7 +142,7 @@ public class View extends JFrame implements PropertyChangeListener {
         return graphPanel;
     }
 
-    public void prepareColorsPanel() {
+    public void prepareColorsPanel(ActionListener cListener) {
         colorButtonPanelArray = new ArrayList<>();
         button_WHITE_WITH_YELLOW = new JToggleButton("1", false);
         button_WHITE_WITH_YELLOW.setBackground(Colors.WHITE_WITH_YELLOW.getColor());
@@ -192,7 +194,7 @@ public class View extends JFrame implements PropertyChangeListener {
 
         colorButtonPanelArray.forEach((button) -> {
             colorsPanel.add(button);
-            button.addActionListener(generalListener);
+            button.addActionListener(cListener);
         });
 
     }
@@ -259,7 +261,7 @@ public class View extends JFrame implements PropertyChangeListener {
                         button.setEnabled(true);
                 });
             }
-            isPressed = isPressed ^ true;
+            isPressed = !isPressed;
             pack();
         }
 
@@ -269,10 +271,13 @@ public class View extends JFrame implements PropertyChangeListener {
     public void propertyChange(PropertyChangeEvent e) {
         Data newData = (Data) e.getNewValue();
         if (e.getPropertyName().equals(new String("Size"))) {
-            graphPanel.init(newData.getSizeX(), newData.getSizeY());
-            pack();
-            setMinimumSize(new Dimension(this.getWidth(), this.getHeight()));
+            graphPanel.defaultSetup(newData.getSizeX(), newData.getSizeY());
+
+        } else if(e.getPropertyName().equals(new String("Field"))) {
+            graphPanel.setupFromField(newData.getSizeX(), newData.getSizeY(), newData.getField());
         }
+        pack();
+        setMinimumSize(new Dimension(this.getWidth(), this.getHeight()));
 
     }
 

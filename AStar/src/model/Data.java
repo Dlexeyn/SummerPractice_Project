@@ -5,6 +5,15 @@ public class Data {
     private Cell[][] field;
     private Cell startCell;
     private Cell finishCell;
+    private Cell updatedCell;
+
+    public Cell getUpdatedCell() {
+        return updatedCell;
+    }
+
+    public void setUpdatedCell(int posX, int posY) {
+        this.updatedCell = field[posY][posX];
+    }
 
     public Data(int sizeX, int sizeY) {
         this.sizeX = sizeX;
