@@ -6,6 +6,11 @@ public class Data {
     private Cell startCell;
     private Cell finishCell;
 
+    public Data(int sizeX, int sizeY){
+        this.sizeX = sizeX;
+        this.sizeY = sizeY;
+        field = new Cell[sizeY][sizeX];
+    }
     public int getSizeY() {
         return sizeY;
     }

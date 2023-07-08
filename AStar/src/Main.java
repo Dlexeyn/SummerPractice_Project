@@ -5,6 +5,7 @@ public class Main {
     public static void main(String[] args) {
 
         controller = new MainController();
+        controller.init();
         controller.start();
     }
 }

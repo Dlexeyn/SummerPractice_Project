@@ -13,7 +13,7 @@ public class FieldFacade{
 
     public FieldFacade(int sizeY, int sizeX, CellType [][] mapType){
         initMap(sizeY, sizeX);
-
+        initEnumMap();
         for(int y = 0; y < sizeY; y++){
             for(int x = 0; x < sizeX; x++)
             {
@@ -26,7 +26,7 @@ public class FieldFacade{
             }
         }
         // init EnumMap
-        initEnumMap();
+
     }
 
     public FieldFacade(int sizeY, int sizeX){
@@ -37,16 +37,18 @@ public class FieldFacade{
         initEnumMap();
     }
 
-    private void initMap(int sizeY, int sizeX)
-    {
-        fData = new Data();
-        fData.setSizeY(sizeY);
-        fData.setSizeX(sizeX);
-        fData.setField(new Cell[sizeY][sizeX]);
-    }
+    private void initMap(int sizeY, int sizeX) {
+        fData = new Data(sizeX, sizeY);
+        for(int y = 0; y < sizeY; y++) {
+            for (int x = 0; x < sizeX; x++) {
+                fData.getField()[y][x] = new Cell();
+            }
+        }
 
+    }
     private void initEnumMap()
     {
+        costTypeMap = new EnumMap<>(CellType.class);
         int cost = 1;
         for(CellType type : CellType.values())
             costTypeMap.put(type, cost++);

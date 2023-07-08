@@ -3,6 +3,7 @@ package controller;
 import model.CellType; 
 
 import java.io.*;
+import java.util.ArrayList;
 
 public class Reader{
     private int sizeX, sizeY;
@@ -22,22 +23,28 @@ public class Reader{
     }
     
     public void read() throws IOException{
-        int sizeY, sizeX;
-        CellType [] [] field;                          
         BufferedReader br = null;
         br = new BufferedReader(new FileReader(NAME_FILE));
         String line = "";
-        while ((line = br.readLine()) != null){
-            String[]items = line.split("");
-            sizeY = Integer.parseInt(items[0]);
-            sizeX = Integer.parseInt(items[1]);
+        ArrayList<String> text = new ArrayList<String>();
+        while ((line = br.readLine()) != null) {
+            text.add(line);
+        }
+        if(text.size()>1){
+            sizeY = Integer.parseInt(text.get(0));
+            sizeX = Integer.parseInt(text.get(1));
             field = new CellType[sizeY][sizeX];
-            for(int i=2;i<sizeY+2;i++){
-                for(int j=0; j<sizeX;j++){
-                    field[i-2][j] =inverse(Character.toLowerCase(items[i].charAt(j))); 
+            if(text.size() == sizeY + 2){
+                for(int i=2;i<sizeY+2;i++){
+                    if(text.get(i).length() == sizeX){
+                        for(int j=0; j<sizeX;j++){
+                            field[i-2][j] =inverse(Character.toLowerCase(text.get(i).charAt(j)));
+                        }
+                    }
                 }
             }
         }
+
     }
     public CellType inverse (char c){
         switch(c){
