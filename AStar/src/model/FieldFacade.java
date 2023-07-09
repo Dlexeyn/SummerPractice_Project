@@ -1,14 +1,15 @@
 package model;
 
-
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.EnumMap;
+import java.util.List;
 
 public class FieldFacade {
     private Data fData;
     private AStar aStar;
+    private AStarAlgorithm aStarTest;
 
     private static EnumMap<CellType, Integer> costTypeMap;
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
@@ -105,7 +106,7 @@ public class FieldFacade {
         if (fData.getFinishCell() != null)
             fData.getFinishCell().setSelfCost(1);
 
-        if(fData.getField()[posY][posX].getType() == CellType.SOURCE_TYPE)  // Проверка на вершину Старта
+        if (fData.getField()[posY][posX].getType() == CellType.SOURCE_TYPE) // Проверка на вершину Старта
             fData.setStartCell(null);
 
         fData.getField()[posY][posX].setSelfCost(costTypeMap.get(CellType.STOCK_TYPE));
@@ -117,7 +118,7 @@ public class FieldFacade {
         if (fData.getStartCell() != null)
             fData.getStartCell().setSelfCost(1);
 
-        if(fData.getField()[posY][posX].getType() == CellType.STOCK_TYPE)   // Проверка на вершину Финиша
+        if (fData.getField()[posY][posX].getType() == CellType.STOCK_TYPE) // Проверка на вершину Финиша
             fData.setFinishCell(null);
 
         fData.getField()[posY][posX].setSelfCost(costTypeMap.get(CellType.SOURCE_TYPE));
@@ -126,10 +127,23 @@ public class FieldFacade {
     }
 
     public void launchAlgorithm() {
+        // aStarTest = new AStarAlgorithm(fData);
+        // List<Cell> answer = aStarTest.findPath();
+        // System.out.println(answer.get(answer.size() - 1).getPosY());
+        // System.out.println(answer.get(answer.size() - 1).getPosX());
+
         aStar = new AStar();
-        Cell answerCell = aStar.solve(fData);
-        System.out.println(answerCell.getPosY());
-        System.out.println(answerCell.getPosX());
+        Cell answer = aStar.solve(fData);
+        while(answer.getParentCell() != null){
+            if(!answer.isFinish())
+                fData.addToPath(answer);
+            answer = answer.getParentCell();
+        }
+
+        notify("Path", fData);
+        System.out.println(answer.getPosY());
+        System.out.println(answer.getPosX());
+
     }
 
     public Data getfData() {

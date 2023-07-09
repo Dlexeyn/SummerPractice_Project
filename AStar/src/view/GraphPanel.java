@@ -134,6 +134,10 @@ public class GraphPanel extends JPanel implements PropertyChangeListener {
         } else if (e.getPropertyName().equals(new String("Vertex"))) {
             Cell updatedCell = newData.getUpdatedCell();
             setParamsToCellView(cellsViewers[updatedCell.getPosY()][updatedCell.getPosX()], updatedCell);
+        } else if (e.getPropertyName().equals(new String("Path"))) {
+            for(Cell cell : newData.getPath()) {
+                cellsViewers[cell.getPosY()][cell.getPosX()].setBackground(Color.CYAN);
+            }
         }
     }
 

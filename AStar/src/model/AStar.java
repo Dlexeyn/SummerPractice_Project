@@ -12,7 +12,7 @@ public class AStar {
         PriorityQueue<Cell> openList = new PriorityQueue<>();
         posFinishX = field.getFinishCell().getPosX();
         posFinishY = field.getFinishCell().getPosY();
-
+        field.getStartCell().setHCost(Integer.MAX_VALUE);
         openList.add(field.getStartCell());
 
         while (!openList.isEmpty()) {
@@ -35,11 +35,11 @@ public class AStar {
                         curCell.setGCost(totalWight);
                         curCell.setHCost(calculateHeuristic(curCell.getPosX(), curCell.getPosY()));
                         curCell.setFCost(curCell.getGCost() + curCell.getHCost());
+                        if (closedList.contains(curCell)) {
+                            closedList.remove(curCell);
+                            openList.add(curCell);
+                        }
                     }
-//                    if (closedList.contains(curCell)) {
-//                        closedList.remove(curCell);
-//                        openList.add(curCell);
-//                    }
                 }
             }
             openList.remove(cell);
@@ -67,7 +67,7 @@ public class AStar {
     }
 
     public int calculateHeuristic(int posX, int posY) {
-        return Math.abs(posX - posFinishX )-1 + Math.abs(posY - posFinishY)-1;
+        return (Math.abs(posX - posFinishX )-1 + Math.abs(posY - posFinishY)-1);
     }
 
     public ArrayList<Cell> getNeighbors(int posX, int posY, Data field) {

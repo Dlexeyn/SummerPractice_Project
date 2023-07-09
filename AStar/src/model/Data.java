@@ -1,11 +1,22 @@
 package model;
 
+import java.util.ArrayList;
+
 public class Data {
     private int sizeY, sizeX;
     private Cell[][] field;
     private Cell startCell;
     private Cell finishCell;
     private Cell updatedCell;
+    ArrayList<Cell> path;
+
+    public void addToPath(Cell cell){
+        path.add(cell);
+    }
+    
+    public ArrayList<Cell> getPath() {
+        return path;
+    }
 
     public Cell getUpdatedCell() {
         return updatedCell;
@@ -16,6 +27,7 @@ public class Data {
     }
 
     public Data(int sizeX, int sizeY) {
+        path = new ArrayList<>();
         this.sizeX = sizeX;
         this.sizeY = sizeY;
         field = new Cell[sizeY][sizeX];
