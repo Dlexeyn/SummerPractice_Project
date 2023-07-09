@@ -21,7 +21,7 @@ public class Cell implements Comparable {
         parentCell = null;
         start = false;
         finish = false;
-        gCost = 1;
+        selfCost = 1;
         type = CellType.FIRST_TYPE;
     }
 

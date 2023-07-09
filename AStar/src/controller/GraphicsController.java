@@ -12,6 +12,7 @@ public class GraphicsController implements ActionListener {
     MainController controller;
     ArrayList<JButton> listenedButtonsArray;
     int iterator;
+    DialogSizeInput dialog;
 
     public GraphicsController(MainController controller) {
         this.controller = controller;
@@ -31,6 +32,7 @@ public class GraphicsController implements ActionListener {
 
             } else if (e.getSource() == button && iterator == 1) { // reset
                 gResetField();
+                setStateButtons(true);
             } else if (e.getSource() == button && iterator == 2) { // resize
                 changeSizeField();
             } else if (e.getSource() == button && iterator == 3) { // launch
@@ -39,10 +41,9 @@ public class GraphicsController implements ActionListener {
 
             }
         });
-
     }
 
-    private void setStateButtons(boolean state) {
+    public void setStateButtons(boolean state) {
         listenedButtonsArray.forEach((button) -> {
             button.setEnabled(state);
         });
@@ -50,9 +51,8 @@ public class GraphicsController implements ActionListener {
 
     private void changeSizeField() {
         setStateButtons(false);
-        DialogSizeInput dialog = new DialogSizeInput(controller);
+        dialog = new DialogSizeInput(controller, this);
         dialog.init();
-        setStateButtons(true);
     }
 
     private void gResetField() {

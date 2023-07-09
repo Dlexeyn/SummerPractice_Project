@@ -33,7 +33,6 @@ public class FieldFacade {
     public FieldFacade(int sizeY, int sizeX) {
 
         costTypeMap = new EnumMap<>(CellType.class);
-
         initMap(sizeY, sizeX);
         initEnumMap();
     }
@@ -92,7 +91,8 @@ public class FieldFacade {
     }
 
     public void fResetField() {
-        fData.dResetField();
+        //fData.dResetField();
+        initMap(fData.getSizeY(), fData.getSizeX());
         notify("Size", fData);
     }
 
@@ -106,8 +106,10 @@ public class FieldFacade {
         if (fData.getFinishCell() != null)
             fData.getFinishCell().setSelfCost(1);
 
-        if (fData.getField()[posY][posX].getType() == CellType.SOURCE_TYPE) // Проверка на вершину Старта
+        if (fData.getField()[posY][posX].getType() == CellType.SOURCE_TYPE){
+            fData.getStartCell().setSelfCost(1);
             fData.setStartCell(null);
+        }
 
         fData.getField()[posY][posX].setSelfCost(costTypeMap.get(CellType.STOCK_TYPE));
         fData.getField()[posY][posX].setType(CellType.STOCK_TYPE);
@@ -118,8 +120,11 @@ public class FieldFacade {
         if (fData.getStartCell() != null)
             fData.getStartCell().setSelfCost(1);
 
-        if (fData.getField()[posY][posX].getType() == CellType.STOCK_TYPE) // Проверка на вершину Финиша
+        if (fData.getField()[posY][posX].getType() == CellType.STOCK_TYPE){
+            fData.getFinishCell().setSelfCost(1);
             fData.setFinishCell(null);
+        }
+            
 
         fData.getField()[posY][posX].setSelfCost(costTypeMap.get(CellType.SOURCE_TYPE));
         fData.getField()[posY][posX].setType(CellType.SOURCE_TYPE);

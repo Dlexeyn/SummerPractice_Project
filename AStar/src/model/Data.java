@@ -71,7 +71,6 @@ public class Data {
 
     public void setStartCell(Cell startCell) {
         this.startCell = startCell;
-        startCell.setSelfCost(0);
     }
 
     public Cell getFinishCell() {
@@ -80,7 +79,6 @@ public class Data {
 
     public void setFinishCell(Cell finishCell) {
         this.finishCell = finishCell;
-        finishCell.setSelfCost(0);
     }
 
 }

@@ -26,11 +26,9 @@ public class CellViewer extends JButton {
 
     public void addParams(int g, int h, int f)
     {
-        StringBuilder sBuilder = new StringBuilder("(");
-        sBuilder.append(g + ", ");
-        sBuilder.append(h + ", ");
-        sBuilder.append(f + ")");
+        StringBuilder sBuilder = new StringBuilder("(" + g + ", "+ h + ", " + f + ")");
         this.setText(sBuilder.toString());
+        this.setForeground(Color.black);
     }
 
     public int getRow() {

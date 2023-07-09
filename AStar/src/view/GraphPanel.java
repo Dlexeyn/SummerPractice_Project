@@ -109,8 +109,10 @@ public class GraphPanel extends JPanel implements PropertyChangeListener {
             int x = newData.getStartCell().getPosX();
             int y = newData.getStartCell().getPosY();
 
-            if (start != null)
+            if (start != null){
                 start.setTypeColor(colorTypeMap.get(CellType.FIRST_TYPE).getColor());
+                start.addParams(1, 0, 0);
+            }
 
             if(cellsViewers[y][x] == finish)
                 finish = null;
@@ -122,9 +124,11 @@ public class GraphPanel extends JPanel implements PropertyChangeListener {
             int x = newData.getFinishCell().getPosX();
             int y = newData.getFinishCell().getPosY();
 
-            if (finish != null)
+            if (finish != null){
                 finish.setTypeColor(colorTypeMap.get(CellType.FIRST_TYPE).getColor());
-
+                finish.addParams(1, 0, 0);
+            }
+                
             if(cellsViewers[y][x] == start)
                 start = null;
 

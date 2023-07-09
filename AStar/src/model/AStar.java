@@ -67,7 +67,7 @@ public class AStar {
     }
 
     public int calculateHeuristic(int posX, int posY) {
-        return (Math.abs(posX - posFinishX )-1 + Math.abs(posY - posFinishY)-1);
+        return (Math.max(Math.abs(posX - posFinishX )-1 , Math.abs(posY - posFinishY)-1));
     }
 
     public ArrayList<Cell> getNeighbors(int posX, int posY, Data field) {
@@ -75,6 +75,16 @@ public class AStar {
         if (posX != 0) {
             if (field.getField()[posY][posX - 1].getType() != CellType.BLOCK_TYPE) {
                 neighbors.add(field.getField()[posY][posX - 1]);
+            }
+            if(posY!=0){
+                if (field.getField()[posY-1][posX - 1].getType() != CellType.BLOCK_TYPE) {
+                    neighbors.add(field.getField()[posY-1][posX - 1]);
+                }
+            }
+            if(posY != field.getSizeY() - 1){
+                if (field.getField()[posY + 1][posX - 1].getType() != CellType.BLOCK_TYPE) {
+                    neighbors.add(field.getField()[posY + 1][posX - 1]);
+                }
             }
         }
         if (posY != 0) {
@@ -90,6 +100,16 @@ public class AStar {
         if (posX != field.getSizeX() - 1) {
             if (field.getField()[posY][posX + 1].getType() != CellType.BLOCK_TYPE) {
                 neighbors.add(field.getField()[posY][posX + 1]);
+            }
+            if( posY!= 0){
+                if (field.getField()[posY-1][posX + 1].getType() != CellType.BLOCK_TYPE) {
+                    neighbors.add(field.getField()[posY-1][posX + 1]);
+                }
+            }
+            if(posY != field.getSizeY() - 1){
+                if (field.getField()[posY + 1][posX + 1].getType() != CellType.BLOCK_TYPE) {
+                    neighbors.add(field.getField()[posY + 1][posX + 1]);
+                }
             }
         }
         return neighbors;
