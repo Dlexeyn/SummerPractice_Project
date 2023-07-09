@@ -44,14 +44,11 @@ public class DialogSizeInput {
 
         // Перенести слушателя в контроллеры
         buttonOk.addActionListener(e -> {
-            int height = Integer.parseInt(yTextField.getText());
-            int width = Integer.parseInt(xTextField.getText());
-            controller.getFacade().resize(height, width);
-            frame.dispose(); // Close the dialog window
-
+            if(controller.checkSizeinput(xTextField.getText(), yTextField.getText())){
+                frame.dispose();
+            }
         });
         labelPanel.add(buttonOk, BorderLayout.SOUTH);
-
         frame.setSize(300, 150);
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

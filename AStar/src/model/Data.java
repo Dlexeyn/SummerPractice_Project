@@ -45,12 +45,21 @@ public class Data {
         this.field = field;
     }
 
+    public void dResetField() {
+        for (int y = 0; y < sizeY; y++) {
+            for (int x = 0; x < sizeX; x++) {
+                field[y][x].reset();
+            }
+        }
+    }
+
     public Cell getStartCell() {
         return startCell;
     }
 
     public void setStartCell(Cell startCell) {
         this.startCell = startCell;
+        startCell.setSelfCost(0);
     }
 
     public Cell getFinishCell() {
@@ -59,6 +68,7 @@ public class Data {
 
     public void setFinishCell(Cell finishCell) {
         this.finishCell = finishCell;
+        finishCell.setSelfCost(0);
     }
 
 }

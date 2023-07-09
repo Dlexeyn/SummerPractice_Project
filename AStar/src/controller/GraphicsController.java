@@ -30,11 +30,11 @@ public class GraphicsController implements ActionListener {
             if (e.getSource() == button && iterator == 0) { // change color
 
             } else if (e.getSource() == button && iterator == 1) { // reset
-
+                gResetField();
             } else if (e.getSource() == button && iterator == 2) { // resize
                 changeSizeField();
             } else if (e.getSource() == button && iterator == 3) { // launch
-
+                controller.launchAStar();
             } else if (e.getSource() == button && iterator == 4) { // forward
 
             }
@@ -55,7 +55,7 @@ public class GraphicsController implements ActionListener {
         setStateButtons(true);
     }
 
-    private void resetField() {
-        
+    private void gResetField() {
+        controller.mResetField();
     }
 }

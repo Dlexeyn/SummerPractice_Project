@@ -9,8 +9,9 @@ public enum Colors {
     DARK_ORANGE(194, 128, 9),
     BROWN(140, 93, 7),
     GREY(142, 142, 147),
-    RED(255, 59, 48),
-    GREEN(76, 217, 100); 
+    GREEN(76, 217, 100),
+    RED(255, 59, 48);
+
 
     private final int r;
     private final int g;

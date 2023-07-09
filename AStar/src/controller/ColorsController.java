@@ -19,11 +19,12 @@ public class ColorsController implements ActionListener{
     private CellType cellType;
     private VertexListener vListener;
     private ChoiceListener cListener;
-
+    
     public ColorsController(MainController controller) {
         this.controller = controller;
         cListener = new ChoiceListener();
         vListener = new VertexListener(controller);
+        cellType = CellType.FIRST_TYPE;
     }
 
     public void setListenedButtonsArray() {
@@ -45,6 +46,13 @@ public class ColorsController implements ActionListener{
         });
     }
 
+    public VertexListener getvListener() {
+        return vListener;
+    }
+
+    public ChoiceListener getcListener() {
+        return cListener;
+    }
 
     private class ChoiceListener implements ActionListener {
 
@@ -88,7 +96,6 @@ public class ColorsController implements ActionListener{
         public void actionPerformed(ActionEvent e) {
             CellViewer cellViewer = (CellViewer) e.getSource();
             controller.changeStateVertex(cellViewer.getColumn(),cellViewer.getRow(), getCellType());
-            //controller.getFacade().changeVertex(cellViewer.getColumn(),cellViewer.getRow(), getCellType());
         }
 
     }

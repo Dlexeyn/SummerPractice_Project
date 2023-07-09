@@ -1,5 +1,6 @@
 package model;
 
+
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -7,6 +8,7 @@ import java.util.EnumMap;
 
 public class FieldFacade {
     private Data fData;
+    private AStar aStar;
 
     private static EnumMap<CellType, Integer> costTypeMap;
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
@@ -39,9 +41,25 @@ public class FieldFacade {
         fData = new Data(sizeX, sizeY);
         for (int y = 0; y < sizeY; y++) {
             for (int x = 0; x < sizeX; x++) {
-                fData.getField()[y][x] = new Cell();
+                fData.getField()[y][x] = new Cell(x, y);
             }
         }
+    }
+
+    public void setMap(int sizeY, int sizeX, CellType[][] mapType) {
+        fData.setSizeY(sizeY);
+        fData.setSizeX(sizeX);
+        for (int y = 0; y < sizeY; y++) {
+            for (int x = 0; x < sizeX; x++) {
+                CellType curCellType = mapType[y][x];
+                changeVertex(x, y, curCellType);
+                if (curCellType == CellType.SOURCE_TYPE)
+                    setStart(x, y);
+                else if (curCellType == CellType.STOCK_TYPE)
+                    setFinish(x, y);
+            }
+        }
+        notify("Field", fData);
     }
 
     private void initEnumMap() {
@@ -67,40 +85,51 @@ public class FieldFacade {
         support.firePropertyChange(message, null, data);
     }
 
-    // Оповестить визуализацию
     public void resize(int sizeY, int sizeX) {
         initMap(sizeY, sizeX);
         notify("Size", fData);
     }
 
-    // Оповестить визуализацию
+    public void fResetField() {
+        fData.dResetField();
+        notify("Size", fData);
+    }
+
     public void changeVertex(int posX, int posY, CellType newType) {
         Cell cell = fData.getField()[posY][posX];
-        cell.setgCost(costTypeMap.get(newType));
+        cell.setSelfCost(costTypeMap.get(newType));
         cell.setType(newType);
     }
 
-    // Оповестить визуализацию
     public void setFinish(int posX, int posY) {
         if (fData.getFinishCell() != null)
-            fData.getFinishCell().setgCost(1);
+            fData.getFinishCell().setSelfCost(1);
 
-        fData.getField()[posY][posX].setgCost(costTypeMap.get(CellType.STOCK_TYPE));
+        if(fData.getField()[posY][posX].getType() == CellType.SOURCE_TYPE)  // Проверка на вершину Старта
+            fData.setStartCell(null);
+
+        fData.getField()[posY][posX].setSelfCost(costTypeMap.get(CellType.STOCK_TYPE));
+        fData.getField()[posY][posX].setType(CellType.STOCK_TYPE);
         fData.setFinishCell(fData.getField()[posY][posX]);
     }
 
-    // Оповестить визуализацию
     public void setStart(int posX, int posY) {
         if (fData.getStartCell() != null)
-            fData.getStartCell().setgCost(1);
+            fData.getStartCell().setSelfCost(1);
 
-        fData.getField()[posY][posX].setgCost(costTypeMap.get(CellType.SOURCE_TYPE));
+        if(fData.getField()[posY][posX].getType() == CellType.STOCK_TYPE)   // Проверка на вершину Финиша
+            fData.setFinishCell(null);
+
+        fData.getField()[posY][posX].setSelfCost(costTypeMap.get(CellType.SOURCE_TYPE));
+        fData.getField()[posY][posX].setType(CellType.SOURCE_TYPE);
         fData.setStartCell(fData.getField()[posY][posX]);
     }
 
-    // Оповестить визуализацию
-    public void startAlgorithm() {
-
+    public void launchAlgorithm() {
+        aStar = new AStar();
+        Cell answerCell = aStar.solve(fData);
+        System.out.println(answerCell.getPosY());
+        System.out.println(answerCell.getPosX());
     }
 
     public Data getfData() {
