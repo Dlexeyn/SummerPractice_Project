@@ -13,12 +13,14 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-import model.CellType;
+// import model.CellType;
 import model.Data;
 
 public class View extends JFrame implements PropertyChangeListener {
 
     static final int COLOR_COUNT = 9;
+
+    public int outputCost;
 
     private GeneralListener generalListener;
     private ChooseColorListener chooseColorListener;
@@ -36,16 +38,18 @@ public class View extends JFrame implements PropertyChangeListener {
     JButton buttonChooseColor;
     JButton buttonReset;
     JButton buttonSetSize;
-    JToggleButton buttonPosStart;
-    JToggleButton buttonPosFinish;
-    JButton buttonLaunch;
+    JButton buttonLaunchNormal;
+    JButton buttonLaunchStep;
     JButton buttonForward;
+
     JToggleButton button_WHITE_WITH_YELLOW;
     JToggleButton button_LIGHT_YELLOW;
     JToggleButton button_ORANGE;
     JToggleButton button_DARK_ORANGE;
     JToggleButton button_BROWN;
     JToggleButton button_GREY;
+    JToggleButton buttonPosStart;
+    JToggleButton buttonPosFinish;
     JToggleButton lastChoiceButton;
 
     JTextArea outText;
@@ -108,27 +112,32 @@ public class View extends JFrame implements PropertyChangeListener {
     }
 
     public void prepareButtonPanel(ActionListener aListener) {
+
         Dimension buttonSize = new Dimension(140, 80);
 
         buttonPanelArray = new ArrayList<JButton>();
         buttonReset = new JButton("Сброс");
         buttonReset.setPreferredSize(buttonSize);
-        buttonSetSize = new JButton("Изменить размер");
+        buttonSetSize = new JButton("Задать размер графа");
         buttonSetSize.setPreferredSize(buttonSize);
         buttonChooseColor = new JButton("Редактировать");
         buttonChooseColor.addActionListener(chooseColorListener);
         buttonChooseColor.setPreferredSize(buttonSize);
-        buttonLaunch = new JButton("Запустить");
-        buttonLaunch.setPreferredSize(buttonSize);
+        buttonLaunchNormal = new JButton("Запустить");
+        buttonLaunchNormal.setPreferredSize(buttonSize);
+        buttonLaunchStep = new JButton("Запустить пошагово");
+        buttonLaunchStep.setPreferredSize(buttonSize);
         buttonForward = new JButton("Шаг вперёд");
         buttonForward.setPreferredSize(buttonSize);
+        buttonForward.setVisible (false);
 
-        buttonPanel = new JPanel(new GridLayout(7, 1, 0, 20));
+        buttonPanel = new JPanel(new GridLayout(6, 1, 0, 20));
 
         buttonPanelArray.add(buttonChooseColor);
         buttonPanelArray.add(buttonReset);
         buttonPanelArray.add(buttonSetSize);
-        buttonPanelArray.add(buttonLaunch);
+        buttonPanelArray.add(buttonLaunchNormal);
+        buttonPanelArray.add(buttonLaunchStep);
         buttonPanelArray.add(buttonForward);
 
         buttonPanelArray.forEach((button) -> {
@@ -157,11 +166,11 @@ public class View extends JFrame implements PropertyChangeListener {
         button_ORANGE = new JToggleButton("3", false);
         button_ORANGE.setBackground(Colors.ORANGE.getColor());
         button_ORANGE.setBorder(BorderFactory.createLineBorder(Colors.ORANGE.getColor(), 3, true));
-        
+
         button_DARK_ORANGE = new JToggleButton("4", false);
         button_DARK_ORANGE.setBackground(Colors.DARK_ORANGE.getColor());
         button_DARK_ORANGE.setBorder(BorderFactory.createLineBorder(Colors.DARK_ORANGE.getColor(), 3, true));
-        
+
         button_BROWN = new JToggleButton("5", false);
         button_BROWN.setBackground(Colors.BROWN.getColor());
         button_BROWN.setBorder(BorderFactory.createLineBorder(Colors.BROWN.getColor(), 3, true));
@@ -204,7 +213,7 @@ public class View extends JFrame implements PropertyChangeListener {
         menuBarArray = new ArrayList<>();
         toolSave = new JButton("Сохранить");
         toolLoad = new JButton("Загрузить");
-        
+
         menuBarArray.add(toolSave);
         menuBarArray.add(toolLoad);
 
@@ -218,7 +227,7 @@ public class View extends JFrame implements PropertyChangeListener {
 
     private void prepareTextPanel() {
         textPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        outText = new JTextArea("Вывод", 6, 70);
+        outText = new JTextArea(6, 70);
         outText.setFont(new Font("Dialog", Font.PLAIN, 18));
         outText.setTabSize(10);
         outText.setEditable(false);
@@ -273,6 +282,13 @@ public class View extends JFrame implements PropertyChangeListener {
         if (e.getPropertyName().equals(new String("Size")) || e.getPropertyName().equals(new String("Field"))) {
             graphPanel.setupFromField(newData.getSizeX(), newData.getSizeY(), newData.getField());
             graphPanel.setEnabledbuttons(false);
+        } else if (e.getPropertyName().equals(new String("Path"))) {
+            // outText.dis
+            outText.append("Путь найден. Стоимость:" + Integer.toString(newData.getPathCost()) + "\n");
+            outText.updateUI();
+        } else if (e.getPropertyName().equals(new String("NoPath"))) {
+            outText.append("Путь не найден.\n");
+            outText.updateUI();
         }
         pack();
         setMinimumSize(new Dimension(this.getWidth(), this.getHeight()));
