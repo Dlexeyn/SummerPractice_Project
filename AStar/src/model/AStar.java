@@ -1,23 +1,40 @@
 package model;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.PriorityQueue;
 
 public class AStar {
+    private final PropertyChangeSupport support;
     private int posFinishX;
     private int posFinishY;
+    private PriorityQueue<Cell> closedList;
+    private PriorityQueue<Cell> openList;
+    private Data field;
+    private boolean isAnswer = false;
+    private ArrayList<Cell> seenCell;
 
-    public Cell solve(Data field) {
-        PriorityQueue<Cell> closedList = new PriorityQueue<>();
-        PriorityQueue<Cell> openList = new PriorityQueue<>();
-        posFinishX = field.getFinishCell().getPosX();
-        posFinishY = field.getFinishCell().getPosY();
+    public AStar(Data fData, PropertyChangeListener viewListener){
+        field = fData;
+        posFinishX = fData.getFinishCell().getPosX();
+        posFinishY = fData.getFinishCell().getPosY();
+        closedList = new PriorityQueue<>();
+        openList = new PriorityQueue<>();
         field.getStartCell().setHCost(Integer.MAX_VALUE);
         openList.add(field.getStartCell());
+        seenCell = new ArrayList<>();
+        support = new PropertyChangeSupport(this);
+        support.addPropertyChangeListener(viewListener);
+    }
+
+    public Cell solve(boolean isStepMode) {
 
         while (!openList.isEmpty()) {
             Cell cell = openList.peek();
             if (cell == field.getFinishCell()) {
+                field.setPathCost(cell.getGCost());
+                isAnswer = true;
                 return cell;
             }
             ArrayList<Cell> neighbors = getNeighbors(cell.getPosX(), cell.getPosY(), field);
@@ -42,11 +59,28 @@ public class AStar {
                     }
                 }
             }
+
             openList.remove(cell);
             closedList.add(cell);
+            openList.forEach((c) -> {
+                if(!seenCell.contains(c)){
+                    seenCell.add(c);
+                }
+            });
+            field.setCurCell(openList.peek());
+            // Остановился
+            // Сигнал View, 
+            // 
+            if(isStepMode){
+                field.setOpenList(seenCell);
+                support.firePropertyChange("Step", null, field);
+                return null;
+            }
+ 
         }
         closedList.clear();
         openList.clear();
+        isAnswer = true;
         return null;
     }
 
@@ -63,7 +97,7 @@ public class AStar {
             case FIFTH_TYPE:
                 return 5;
         }
-        return 1;
+        return 0;
     }
 
     public int calculateHeuristic(int posX, int posY) {
@@ -120,5 +154,12 @@ public class AStar {
             // finish.setType(CellType.)
             finish = finish.getParentCell();
         }
+    }
+
+    public PriorityQueue<Cell> getOpenList() {
+        return openList;
+    }
+    public boolean isAnswered() {
+        return isAnswer;
     }
 }

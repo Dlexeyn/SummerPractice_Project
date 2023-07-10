@@ -35,10 +35,15 @@ public class GraphicsController implements ActionListener {
                 setStateButtons(true);
             } else if (e.getSource() == button && iterator == 2) { // resize
                 changeSizeField();
-            } else if (e.getSource() == button && iterator == 3) { // launch
+            } else if (e.getSource() == button && iterator == 3) { // launch normal
                 controller.launchAStar();
-            } else if (e.getSource() == button && iterator == 4) { // forward
-
+            } else if (e.getSource() == button && iterator == 4) { // launch step
+                setStateButtons(false);
+                listenedButtonsArray.get(5).setVisible(true);
+                listenedButtonsArray.get(5).setEnabled(true);
+                controller.launchAStarStep();
+            } else if (e.getSource() == button && iterator == 5) { // forward
+                controller.launchAStarStep();
             }
         });
     }

@@ -6,10 +6,10 @@ import java.beans.PropertyChangeSupport;
 import java.util.EnumMap;
 import java.util.List;
 
+
 public class FieldFacade {
     private Data fData;
-    private AStar aStar;
-    private AStarAlgorithm aStarTest;
+    private AStar aStar = null;
 
     private static EnumMap<CellType, Integer> costTypeMap;
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
@@ -47,8 +47,7 @@ public class FieldFacade {
     }
 
     public void setMap(int sizeY, int sizeX, CellType[][] mapType) {
-        fData.setSizeY(sizeY);
-        fData.setSizeX(sizeX);
+        initMap(sizeY, sizeX);
         for (int y = 0; y < sizeY; y++) {
             for (int x = 0; x < sizeX; x++) {
                 CellType curCellType = mapType[y][x];
@@ -91,7 +90,7 @@ public class FieldFacade {
     }
 
     public void fResetField() {
-        //fData.dResetField();
+        // fData.dResetField();
         initMap(fData.getSizeY(), fData.getSizeX());
         notify("Size", fData);
     }
@@ -106,7 +105,7 @@ public class FieldFacade {
         if (fData.getFinishCell() != null)
             fData.getFinishCell().setSelfCost(1);
 
-        if (fData.getField()[posY][posX].getType() == CellType.SOURCE_TYPE){
+        if (fData.getField()[posY][posX].getType() == CellType.SOURCE_TYPE) {
             fData.getStartCell().setSelfCost(1);
             fData.setStartCell(null);
         }
@@ -120,38 +119,67 @@ public class FieldFacade {
         if (fData.getStartCell() != null)
             fData.getStartCell().setSelfCost(1);
 
-        if (fData.getField()[posY][posX].getType() == CellType.STOCK_TYPE){
+        if (fData.getField()[posY][posX].getType() == CellType.STOCK_TYPE) {
             fData.getFinishCell().setSelfCost(1);
             fData.setFinishCell(null);
         }
-            
 
         fData.getField()[posY][posX].setSelfCost(costTypeMap.get(CellType.SOURCE_TYPE));
         fData.getField()[posY][posX].setType(CellType.SOURCE_TYPE);
         fData.setStartCell(fData.getField()[posY][posX]);
     }
 
-    public void launchAlgorithm() {
-        // aStarTest = new AStarAlgorithm(fData);
-        // List<Cell> answer = aStarTest.findPath();
-        // System.out.println(answer.get(answer.size() - 1).getPosY());
-        // System.out.println(answer.get(answer.size() - 1).getPosX());
-
-        aStar = new AStar();
-        Cell answer = aStar.solve(fData);
-        while(answer.getParentCell() != null){
-            if(!answer.isFinish())
-                fData.addToPath(answer);
-            answer = answer.getParentCell();
+    public void prepareAlgorithm(PropertyChangeListener viewListener) {
+        if (CheckfDataCellStartFinish() == 0) {
+            aStar = new AStar(fData, viewListener);
         }
+    }
 
-        notify("Path", fData);
-        System.out.println(answer.getPosY());
-        System.out.println(answer.getPosX());
+    public void launchFullAlgorithm() {
+        Cell answer = aStar.solve(false);
+        generateAnswer(answer);
+    }
+
+    public void launchStepAlgorithm() {
+        Cell tempAnswer = aStar.solve(true);
+
+        if (aStar.isAnswered()) {
+            generateAnswer(tempAnswer);
+        }
 
     }
 
+    public void generateAnswer(Cell answerCell) {
+        while (answerCell != null && answerCell.getParentCell() != null) {
+            if (!answerCell.isFinish())
+                fData.addToPath(answerCell);
+            answerCell = answerCell.getParentCell();
+        }
+
+        if (answerCell == null)
+            notify("NoPath", fData);
+        else
+            notify("Path", fData);
+
+    }
+
+    public boolean isStartedAStar(){
+        if(aStar == null)
+            return false;
+        return true;
+    }
     public Data getfData() {
         return fData;
+    }
+
+    public int CheckfDataCellStartFinish() {
+        if (fData.getStartCell() == null) {
+            notify("NoStart", fData);
+            return -1;
+        } else if (fData.getFinishCell() == null) {
+            notify("NoFinish", fData);
+            return -2;
+        }
+        return 0;
     }
 }

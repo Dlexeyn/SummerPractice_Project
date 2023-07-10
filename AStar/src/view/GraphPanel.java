@@ -25,6 +25,7 @@ public class GraphPanel extends JPanel implements PropertyChangeListener {
     int rows, colomns;
     CellViewer start = null;
     CellViewer finish = null;
+    CellViewer targetCellViewer = null;
     CellViewer[][] cellsViewers;
 
     public GraphPanel() {
@@ -142,6 +143,21 @@ public class GraphPanel extends JPanel implements PropertyChangeListener {
             for(Cell cell : newData.getPath()) {
                 cellsViewers[cell.getPosY()][cell.getPosX()].setBackground(Color.CYAN);
             }
+        } else if(e.getPropertyName().equals(new String("Step"))) {
+            for(Cell cell : newData.getOpenList()) {
+                cellsViewers[cell.getPosY()][cell.getPosX()].addParams(cell.getSelfCost(), cell.getHCost(), cell.getFCost());
+                cellsViewers[cell.getPosY()][cell.getPosX()].setBorder(BorderFactory.createLineBorder(Color.GREEN, 6, false));
+            }
+            if(targetCellViewer != null) {
+                targetCellViewer.setBorder(BorderFactory.createLineBorder(Color.GREEN, 6, false));
+            }
+            if(newData.getCurCell() != null) {
+                targetCellViewer = cellsViewers[newData.getCurCell().getPosY()][newData.getCurCell().getPosX()];
+            //targetCellViewer.setBorderPainted(true);
+                targetCellViewer.setBorder(BorderFactory.createLineBorder(Color.BLUE, 6, false));
+            }
+            
+            
         }
     }
 

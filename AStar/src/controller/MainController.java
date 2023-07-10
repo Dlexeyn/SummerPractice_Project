@@ -111,6 +111,14 @@ public class MainController {
     }
 
     public void launchAStar() {
-        facade.launchAlgorithm();
+        facade.prepareAlgorithm(view);
+        facade.launchFullAlgorithm();
+    }
+
+    public void launchAStarStep(){
+        if(!facade.isStartedAStar())
+            facade.prepareAlgorithm(view.getGraphPanel());
+
+        facade.launchStepAlgorithm();
     }
 }

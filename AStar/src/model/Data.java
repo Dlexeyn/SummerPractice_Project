@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.PriorityQueue;
 
 public class Data {
     private int sizeY, sizeX;
@@ -8,7 +9,10 @@ public class Data {
     private Cell startCell;
     private Cell finishCell;
     private Cell updatedCell;
-    ArrayList<Cell> path;
+    private Cell curCell;
+    private ArrayList<Cell> path;
+    private int pathCost;
+    private ArrayList<Cell> openList; 
 
     public void addToPath(Cell cell){
         path.add(cell);
@@ -30,6 +34,8 @@ public class Data {
         path = new ArrayList<>();
         this.sizeX = sizeX;
         this.sizeY = sizeY;
+        startCell = null;
+        finishCell = null;
         field = new Cell[sizeY][sizeX];
     }
 
@@ -79,6 +85,28 @@ public class Data {
 
     public void setFinishCell(Cell finishCell) {
         this.finishCell = finishCell;
+    }
+
+    public int getPathCost(){
+        return pathCost;
+    }
+    
+    public void setPathCost(int pathCost){
+        this.pathCost = pathCost;
+    }
+
+    public ArrayList<Cell> getOpenList(){
+        return openList;
+    }
+
+    public void setOpenList(ArrayList<Cell> openList){
+        this.openList = openList;
+    }
+    public void setCurCell(Cell curCell){
+        this.curCell = curCell;
+    }
+    public Cell getCurCell(){
+        return curCell;
     }
 
 }
