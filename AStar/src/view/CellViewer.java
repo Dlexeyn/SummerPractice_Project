@@ -1,9 +1,9 @@
 package view;
 
-import model.*;
-import javax.swing.*;
-import java.awt.*;
-import java.util.EnumMap;
+import java.awt.Color;
+import java.awt.Font;
+
+import javax.swing.JButton;
 
 
 public class CellViewer extends JButton {
@@ -15,9 +15,10 @@ public class CellViewer extends JButton {
     public CellViewer(int row, int column, int sizeFont){
         this.row = row;
         this.column = column;
-        this.setFont(new Font("Dialog", Font.PLAIN, sizeFont));
+        this.setFont(this.getFont().deriveFont(Font.BOLD, 25)); // TEST!!!
         this.setTypeColor(DEFAULT_COLOR);
     }
+
 
     public void setTypeColor(Color color){
         setBackground(color);

@@ -111,14 +111,24 @@ public class MainController {
     }
 
     public void launchAStar() {
+        backupAction(true);
         facade.prepareAlgorithm(view);
         facade.launchFullAlgorithm();
     }
 
-    public void launchAStarStep(){
-        if(!facade.isStartedAStar())
+    public void launchAStarStep() {
+        backupAction(true);
+        if (!facade.isStartedAStar())
             facade.prepareAlgorithm(view.getGraphPanel());
 
         facade.launchStepAlgorithm();
+    }
+
+    public void backupAction(boolean flag) { // true - save, false - load
+        if (flag == true) {
+            facade.saveBackup();
+        } else {
+            facade.loadBackup();
+        }
     }
 }

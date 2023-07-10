@@ -1,13 +1,12 @@
 package model;
 
-import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.EnumMap;
-import java.util.List;
-
 
 public class FieldFacade {
+
+    private Data backupData;
     private Data fData;
     private AStar aStar = null;
 
@@ -138,6 +137,7 @@ public class FieldFacade {
     public void launchFullAlgorithm() {
         Cell answer = aStar.solve(false);
         generateAnswer(answer);
+        notify("FullAlgorithm", fData);
     }
 
     public void launchStepAlgorithm() {
@@ -163,11 +163,12 @@ public class FieldFacade {
 
     }
 
-    public boolean isStartedAStar(){
-        if(aStar == null)
+    public boolean isStartedAStar() {
+        if (aStar == null)
             return false;
         return true;
     }
+
     public Data getfData() {
         return fData;
     }
@@ -181,5 +182,14 @@ public class FieldFacade {
             return -2;
         }
         return 0;
+    }
+
+    public void saveBackup() {
+        backupData = new Data(fData);
+    }
+
+    public void loadBackup() {
+        fData = new Data(backupData);
+        notify("Field", fData);
     }
 }

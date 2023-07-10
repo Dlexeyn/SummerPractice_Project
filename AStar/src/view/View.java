@@ -41,6 +41,8 @@ public class View extends JFrame implements PropertyChangeListener {
     JButton buttonLaunchNormal;
     JButton buttonLaunchStep;
     JButton buttonForward;
+    JButton buttonClearSolver;
+
 
     JToggleButton button_WHITE_WITH_YELLOW;
     JToggleButton button_LIGHT_YELLOW;
@@ -129,9 +131,12 @@ public class View extends JFrame implements PropertyChangeListener {
         buttonLaunchStep.setPreferredSize(buttonSize);
         buttonForward = new JButton("Шаг вперёд");
         buttonForward.setPreferredSize(buttonSize);
-        buttonForward.setVisible (false);
+        buttonForward.setVisible(false);
+        buttonClearSolver = new JButton("Очистить решение");
+        buttonClearSolver.setPreferredSize(buttonSize);
+        buttonClearSolver.setVisible(false);
 
-        buttonPanel = new JPanel(new GridLayout(6, 1, 0, 20));
+        buttonPanel = new JPanel(new GridLayout(7, 1, 0, 20));
 
         buttonPanelArray.add(buttonChooseColor);
         buttonPanelArray.add(buttonReset);
@@ -139,6 +144,8 @@ public class View extends JFrame implements PropertyChangeListener {
         buttonPanelArray.add(buttonLaunchNormal);
         buttonPanelArray.add(buttonLaunchStep);
         buttonPanelArray.add(buttonForward);
+        buttonPanelArray.add(buttonClearSolver);
+        
 
         buttonPanelArray.forEach((button) -> {
             buttonPanel.add(button);
@@ -175,7 +182,7 @@ public class View extends JFrame implements PropertyChangeListener {
         button_BROWN.setBackground(Colors.BROWN.getColor());
         button_BROWN.setBorder(BorderFactory.createLineBorder(Colors.BROWN.getColor(), 3, true));
 
-        button_GREY = new JToggleButton("Stone", false);
+        button_GREY = new JToggleButton("Блок", false);
         button_GREY.setBackground(Colors.GREY.getColor());
         button_GREY.setBorder(BorderFactory.createLineBorder(Colors.GREY.getColor(), 3, true));
 
@@ -259,6 +266,7 @@ public class View extends JFrame implements PropertyChangeListener {
                 buttonPanelArray.forEach((button) -> {
                     if (button != buttonChooseColor)
                         button.setEnabled(false);
+                    
                 });
                 graphPanel.setEnabledbuttons(true);
             } else {
@@ -267,13 +275,13 @@ public class View extends JFrame implements PropertyChangeListener {
                 buttonPanelArray.forEach((button) -> {
                     if (button != buttonChooseColor)
                         button.setEnabled(true);
+                    //button.setContentAreaFilled()
                 });
                 graphPanel.setEnabledbuttons(false);
             }
             isPressed = !isPressed;
             pack();
         }
-
     }
 
     @Override
@@ -285,14 +293,23 @@ public class View extends JFrame implements PropertyChangeListener {
         } else if (e.getPropertyName().equals(new String("Path"))) {
             // outText.dis
             outText.append("Путь найден. Стоимость:" + Integer.toString(newData.getPathCost()) + "\n");
-            outText.updateUI();
+            postAnswerPrepare();
+
         } else if (e.getPropertyName().equals(new String("NoPath"))) {
             outText.append("Путь не найден.\n");
-            outText.updateUI();
+            postAnswerPrepare();
         }
         pack();
         setMinimumSize(new Dimension(this.getWidth(), this.getHeight()));
+    }
 
+    private void postAnswerPrepare(){
+            outText.updateUI();
+            buttonForward.setEnabled(false);
+            buttonLaunchNormal.setEnabled(false);
+            buttonLaunchStep.setEnabled(false);
+            buttonClearSolver.setVisible(true);
+            buttonClearSolver.setEnabled(true);
     }
 
     public ArrayList<JButton> getButtonPanelArray() {

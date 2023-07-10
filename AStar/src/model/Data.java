@@ -1,9 +1,23 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.PriorityQueue;
 
 public class Data {
+    public Data(Data otherData) {
+        sizeX = otherData.getSizeX();
+        sizeY = otherData.getSizeY();
+
+        field = new Cell[sizeY][sizeX];
+
+        for (int y = 0; y < sizeY; y++) {
+            for (int x = 0; x < sizeX; x++) {
+                field[y][x] = new Cell(otherData.getField()[y][x]);
+            }
+        }
+        startCell = new Cell(otherData.getStartCell());
+        finishCell = new Cell(otherData.getFinishCell());
+    }
+
     private int sizeY, sizeX;
     private Cell[][] field;
     private Cell startCell;
@@ -12,12 +26,12 @@ public class Data {
     private Cell curCell;
     private ArrayList<Cell> path;
     private int pathCost;
-    private ArrayList<Cell> openList; 
+    private ArrayList<Cell> openList;
 
-    public void addToPath(Cell cell){
+    public void addToPath(Cell cell) {
         path.add(cell);
     }
-    
+
     public ArrayList<Cell> getPath() {
         return path;
     }
@@ -87,25 +101,27 @@ public class Data {
         this.finishCell = finishCell;
     }
 
-    public int getPathCost(){
+    public int getPathCost() {
         return pathCost;
     }
-    
-    public void setPathCost(int pathCost){
+
+    public void setPathCost(int pathCost) {
         this.pathCost = pathCost;
     }
 
-    public ArrayList<Cell> getOpenList(){
+    public ArrayList<Cell> getOpenList() {
         return openList;
     }
 
-    public void setOpenList(ArrayList<Cell> openList){
+    public void setOpenList(ArrayList<Cell> openList) {
         this.openList = openList;
     }
-    public void setCurCell(Cell curCell){
+
+    public void setCurCell(Cell curCell) {
         this.curCell = curCell;
     }
-    public Cell getCurCell(){
+
+    public Cell getCurCell() {
         return curCell;
     }
 

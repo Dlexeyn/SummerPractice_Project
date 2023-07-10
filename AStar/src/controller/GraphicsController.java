@@ -33,6 +33,7 @@ public class GraphicsController implements ActionListener {
             } else if (e.getSource() == button && iterator == 1) { // reset
                 gResetField();
                 setStateButtons(true);
+                listenedButtonsArray.get(6).setVisible(false);
             } else if (e.getSource() == button && iterator == 2) { // resize
                 changeSizeField();
             } else if (e.getSource() == button && iterator == 3) { // launch normal
@@ -44,6 +45,10 @@ public class GraphicsController implements ActionListener {
                 controller.launchAStarStep();
             } else if (e.getSource() == button && iterator == 5) { // forward
                 controller.launchAStarStep();
+            } else if (e.getSource() == button && iterator == 6) { // clear
+                controller.backupAction(false);
+                setStateButtons(true);
+                button.setVisible(false);
             }
         });
     }

@@ -1,8 +1,6 @@
 package model;
 
-import java.util.PriorityQueue;
-
-public class Cell implements Comparable {
+public class Cell implements Comparable<Cell> {
 
     Cell parentCell;
     private CellType type;
@@ -112,8 +110,17 @@ public class Cell implements Comparable {
     }
 
     @Override
-    public int compareTo(Object o) {
-        Cell cell = (Cell) o;
+    public int compareTo(Cell cell) {
         return Integer.compare(this.fCost, cell.getFCost());
+    }
+
+    public Cell(Cell otherCell) {
+        type = otherCell.getType();
+        posX = otherCell.getPosX();
+        posY = otherCell.getPosY();
+        selfCost = otherCell.getSelfCost();
+        start = otherCell.isStart();
+        finish = otherCell.isFinish();
+        parentCell = null;
     }
 }

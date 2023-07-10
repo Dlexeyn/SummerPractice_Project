@@ -96,6 +96,12 @@ public class AStar {
                 return 4;
             case FIFTH_TYPE:
                 return 5;
+            case BLOCK_TYPE:
+                return 0;
+            case SOURCE_TYPE:
+                return 0;
+            case STOCK_TYPE:
+                return 0;
         }
         return 0;
     }
