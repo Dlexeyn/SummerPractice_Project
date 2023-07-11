@@ -13,8 +13,8 @@ public class MainController {
 
     private static final String NAME_FILE = System.getProperty("user.dir") + "/save.txt";
     private static final int MIN_SIZE = 3;
-    private static final int MAX_SIZE_Y = 20;
-    private static final int MAX_SIZE_X = 30;
+    private static final int MAX_SIZE_Y = 22;
+    private static final int MAX_SIZE_X = 14;
 
     private View view;
     private GraphicsController gController;
@@ -35,6 +35,7 @@ public class MainController {
         gController.setListenedButtonsArray();
         cController.setListenedButtonsArray();
         slController.setListenedButtonsArray();
+        reader.addPropertyChangeListener(view.getOutText());
     }
 
     public void init() {

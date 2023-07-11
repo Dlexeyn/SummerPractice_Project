@@ -11,8 +11,8 @@ public class Writer {
     int sizeX;
 
     // file variables
-    File saveFile;
-    FileWriter fileWriter;
+    public File saveFile;
+    public FileWriter fileWriter;
     String stringToWrite;
 
     // data to encode into file
@@ -28,7 +28,7 @@ public class Writer {
 
         try {
 
-            saveFile = new File("saved_graph.txt");
+            // saveFile = new File("saved_graph.txt");
 
             fileWriter = new FileWriter(saveFile);
 

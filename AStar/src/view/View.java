@@ -3,6 +3,8 @@ package view;
 import java.util.*;
 
 import javax.swing.*;
+import javax.swing.border.EtchedBorder;
+import javax.swing.border.TitledBorder;
 
 import controller.ColorsController;
 
@@ -13,8 +15,8 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-// import model.CellType;
 import model.Data;
+import model.Cell;
 
 public class View extends JFrame implements PropertyChangeListener {
 
@@ -29,6 +31,7 @@ public class View extends JFrame implements PropertyChangeListener {
     JPanel buttonPanel;
     JPanel colorsPanel;
     JPanel textPanel;
+    JScrollPane scrollPane;
 
     JMenuBar menuBar;
     JMenu menuFile;
@@ -43,7 +46,6 @@ public class View extends JFrame implements PropertyChangeListener {
     JButton buttonForward;
     JButton buttonClearSolver;
 
-
     JToggleButton button_WHITE_WITH_YELLOW;
     JToggleButton button_LIGHT_YELLOW;
     JToggleButton button_ORANGE;
@@ -54,7 +56,7 @@ public class View extends JFrame implements PropertyChangeListener {
     JToggleButton buttonPosFinish;
     JToggleButton lastChoiceButton;
 
-    JTextArea outText;
+    OutTextArea outText;
 
     GroupLayout viewLayout;
 
@@ -72,9 +74,11 @@ public class View extends JFrame implements PropertyChangeListener {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setJMenuBar(menuBar);
         setupLayout();
-        pack();
-        setMinimumSize(new Dimension(this.getWidth(), this.getHeight()));
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
+        setUndecorated(true);
+        setVisible(true);
     }
+
 
     private void setupLayout() {
         viewLayout = new GroupLayout(this.getContentPane());
@@ -145,7 +149,6 @@ public class View extends JFrame implements PropertyChangeListener {
         buttonPanelArray.add(buttonLaunchStep);
         buttonPanelArray.add(buttonForward);
         buttonPanelArray.add(buttonClearSolver);
-        
 
         buttonPanelArray.forEach((button) -> {
             buttonPanel.add(button);
@@ -234,12 +237,21 @@ public class View extends JFrame implements PropertyChangeListener {
 
     private void prepareTextPanel() {
         textPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        outText = new JTextArea(6, 70);
+        textPanel.setBorder ( new TitledBorder ( new EtchedBorder (), "Display Area" ) );
+        
+        outText = new OutTextArea(7, 95);
+        
+
         outText.setFont(new Font("Dialog", Font.PLAIN, 18));
         outText.setTabSize(10);
         outText.setEditable(false);
-        outText.setBorder(BorderFactory.createLineBorder(Color.GRAY, 3, false));
-        textPanel.add(outText, BorderLayout.CENTER);
+        //outText.setBorder(BorderFactory.createLineBorder(Color.GRAY, 3, false));
+        outText.setLineWrap(true);
+
+        scrollPane = new JScrollPane(outText);
+        scrollPane.setVerticalScrollBarPolicy ( ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS );
+        //textPanel.add(outText, BorderLayout.CENTER);
+        textPanel.add(scrollPane);
         colorsPanel.setVisible(false);
     }
 
@@ -266,21 +278,20 @@ public class View extends JFrame implements PropertyChangeListener {
                 buttonPanelArray.forEach((button) -> {
                     if (button != buttonChooseColor)
                         button.setEnabled(false);
-                    
                 });
-                graphPanel.setEnabledbuttons(true);
+
+                graphPanel.updateListener();
             } else {
                 buttonChooseColor.setText("Редактировать");
                 colorsPanel.setVisible(false);
                 buttonPanelArray.forEach((button) -> {
                     if (button != buttonChooseColor)
                         button.setEnabled(true);
-                    //button.setContentAreaFilled()
                 });
                 graphPanel.setEnabledbuttons(false);
+
             }
             isPressed = !isPressed;
-            pack();
         }
     }
 
@@ -290,26 +301,48 @@ public class View extends JFrame implements PropertyChangeListener {
         if (e.getPropertyName().equals(new String("Size")) || e.getPropertyName().equals(new String("Field"))) {
             graphPanel.setupFromField(newData.getSizeX(), newData.getSizeY(), newData.getField());
             graphPanel.setEnabledbuttons(false);
+            outText.setText("");
         } else if (e.getPropertyName().equals(new String("Path"))) {
-            // outText.dis
+            outText.setText(null);
             outText.append("Путь найден. Стоимость:" + Integer.toString(newData.getPathCost()) + "\n");
+            outText.append(PathCoordinates(newData));
             postAnswerPrepare();
-
         } else if (e.getPropertyName().equals(new String("NoPath"))) {
+            outText.setText(null);
             outText.append("Путь не найден.\n");
             postAnswerPrepare();
+        } else if (e.getPropertyName().equals(new String("NoStart"))) {
+            outText.setText(null);
+            outText.append("Cтарт не задан.\n");
+        } else if (e.getPropertyName().equals(new String("NoFinish"))) {
+            outText.setText(null);
+            outText.append("Финиш не задан.\n");
         }
-        pack();
-        setMinimumSize(new Dimension(this.getWidth(), this.getHeight()));
     }
 
-    private void postAnswerPrepare(){
-            outText.updateUI();
-            buttonForward.setEnabled(false);
-            buttonLaunchNormal.setEnabled(false);
-            buttonLaunchStep.setEnabled(false);
-            buttonClearSolver.setVisible(true);
-            buttonClearSolver.setEnabled(true);
+    public String PathCoordinates(Data fData) {
+        ArrayList<Cell> path = new ArrayList<>();
+        path = fData.getPath();
+        Collections.reverse(path);
+        StringBuilder resText = new StringBuilder();
+        resText.append("Путь: ");
+        path.forEach((cell) -> {
+            resText.append("(" + (cell.getPosX() + 1) + "," + (cell.getPosY() + 1) + ")->");
+        });
+        resText.delete(resText.length() - 2, resText.length());
+        return (resText.toString());
+    }
+
+    private void postAnswerPrepare() {
+        outText.updateUI();
+        buttonChooseColor.setEnabled(false);
+        buttonReset.setEnabled(false);
+        buttonSetSize.setEnabled(false);
+        buttonForward.setEnabled(false);
+        buttonLaunchNormal.setEnabled(false);
+        buttonLaunchStep.setEnabled(false);
+        buttonClearSolver.setVisible(true);
+        buttonClearSolver.setEnabled(true);
     }
 
     public ArrayList<JButton> getButtonPanelArray() {
@@ -322,5 +355,9 @@ public class View extends JFrame implements PropertyChangeListener {
 
     public ArrayList<JButton> getMenuBarArray() {
         return menuBarArray;
+    }
+
+    public OutTextArea getOutText() {
+        return outText;
     }
 }

@@ -89,7 +89,7 @@ public class FieldFacade {
     }
 
     public void fResetField() {
-        // fData.dResetField();
+        backupData = null;
         initMap(fData.getSizeY(), fData.getSizeX());
         notify("Size", fData);
     }
@@ -101,8 +101,12 @@ public class FieldFacade {
     }
 
     public void setFinish(int posX, int posY) {
-        if (fData.getFinishCell() != null)
+        if (fData.getFinishCell() != null){
             fData.getFinishCell().setSelfCost(1);
+            fData.getFinishCell().setFinish(false);
+            fData.getFinishCell().setType(CellType.FIRST_TYPE);
+        }
+            
 
         if (fData.getField()[posY][posX].getType() == CellType.SOURCE_TYPE) {
             fData.getStartCell().setSelfCost(1);
@@ -115,8 +119,12 @@ public class FieldFacade {
     }
 
     public void setStart(int posX, int posY) {
-        if (fData.getStartCell() != null)
+        if (fData.getStartCell() != null){
             fData.getStartCell().setSelfCost(1);
+            fData.getStartCell().setStart(false);
+            fData.getStartCell().setType(CellType.FIRST_TYPE);
+        }
+            
 
         if (fData.getField()[posY][posX].getType() == CellType.STOCK_TYPE) {
             fData.getFinishCell().setSelfCost(1);
@@ -189,7 +197,9 @@ public class FieldFacade {
     }
 
     public void loadBackup() {
+        aStar = null;
         fData = new Data(backupData);
         notify("Field", fData);
     }
+
 }

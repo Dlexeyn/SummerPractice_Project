@@ -27,6 +27,7 @@ public class GraphPanel extends JPanel implements PropertyChangeListener {
     CellViewer finish = null;
     CellViewer targetCellViewer = null;
     CellViewer[][] cellsViewers;
+    ActionListener backListener;
 
     public GraphPanel() {
         colorTypeMap = new EnumMap<>(CellType.class);
@@ -96,9 +97,14 @@ public class GraphPanel extends JPanel implements PropertyChangeListener {
     }
 
     public void setEnabledbuttons(boolean value) {
+        // if (!value)
+        //     backListener = cellsViewers[0][0].getActionListeners()[0];
+
         for (int row = 0; row < rows; row++) {
             for (int col = 0; col < colomns; col++) {
-                cellsViewers[row][col].setEnabled(value);
+                // cellsViewers[row][col].setEnabled(value);
+                if (!value)
+                    cellsViewers[row][col].removeActionListener(vListener);
             }
         }
     }
@@ -149,15 +155,15 @@ public class GraphPanel extends JPanel implements PropertyChangeListener {
                 cellsViewers[cell.getPosY()][cell.getPosX()].addParams(cell.getSelfCost(), cell.getHCost(),
                         cell.getFCost());
                 cellsViewers[cell.getPosY()][cell.getPosX()]
-                        .setBorder(BorderFactory.createLineBorder(Color.GREEN, 6, false));
+                        .setBorder(BorderFactory.createLineBorder(Color.GREEN, 4, false));
             }
             if (targetCellViewer != null) {
-                targetCellViewer.setBorder(BorderFactory.createLineBorder(Color.GREEN, 6, false));
+                targetCellViewer.setBorder(BorderFactory.createLineBorder(Color.GREEN, 4, false));
             }
             if (newData.getCurCell() != null) {
                 targetCellViewer = cellsViewers[newData.getCurCell().getPosY()][newData.getCurCell().getPosX()];
                 // targetCellViewer.setBorderPainted(true);
-                targetCellViewer.setBorder(BorderFactory.createLineBorder(Color.BLUE, 6, false));
+                targetCellViewer.setBorder(BorderFactory.createLineBorder(Color.BLUE, 4, false));
             }
 
         } else if (e.getPropertyName().equals("FullAlgorithm")) {

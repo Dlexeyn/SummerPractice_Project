@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="db7524d2-11ca-42fe-9c16-1d26923e425e" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/AStar/src/controller/GraphicsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/AStar/src/controller/GraphicsController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AStar/src/controller/IOput/Reader.java" beforeDir="false" afterPath="$PROJECT_DIR$/AStar/src/controller/IOput/Reader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AStar/src/controller/SaveLoadController.java" beforeDir="false" afterPath="$PROJECT_DIR$/AStar/src/controller/SaveLoadController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AStar/src/model/Cell.java" beforeDir="false" afterPath="$PROJECT_DIR$/AStar/src/model/Cell.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AStar/src/model/Data.java" beforeDir="false" afterPath="$PROJECT_DIR$/AStar/src/model/Data.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AStar/src/model/FieldFacade.java" beforeDir="false" afterPath="$PROJECT_DIR$/AStar/src/model/FieldFacade.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AStar/src/view/CellViewer.java" beforeDir="false" afterPath="$PROJECT_DIR$/AStar/src/view/CellViewer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AStar/src/view/DialogSizeInput.java" beforeDir="false" afterPath="$PROJECT_DIR$/AStar/src/view/DialogSizeInput.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AStar/src/view/GraphPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/AStar/src/view/GraphPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AStar/src/view/View.java" beforeDir="false" afterPath="$PROJECT_DIR$/AStar/src/view/View.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/saved_graph.txt" beforeDir="false" afterPath="$PROJECT_DIR$/saved_graph.txt" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2SLGer6BArTtSLaIfpW3CaO2SBk" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "testing",
+    "last_opened_file_path": "/home/leksil/Projects/Java/SummerPractice_FirstTask",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "project.structure.last.edited": "Artifacts",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RunManager">
+    <configuration name="Main" type="Application" factoryName="Application" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Main" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="db7524d2-11ca-42fe-9c16-1d26923e425e" name="Changes" comment="" />
+      <created>1688918546795</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1688918546795</updated>
+      <workItem from="1688918556275" duration="1770000" />
+      <workItem from="1688999957630" duration="18000" />
+      <workItem from="1689067623575" duration="3320000" />
+      <workItem from="1689073482444" duration="697000" />
+      <workItem from="1689089429293" duration="411000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/AStar/src/view/View.java</url>
+          <line>270</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/SummerPractice_Project$Main.ic" NAME="Main Coverage Results" MODIFIED="1689089598935" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+  </component>
+</project>

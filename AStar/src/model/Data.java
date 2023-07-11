@@ -14,8 +14,11 @@ public class Data {
                 field[y][x] = new Cell(otherData.getField()[y][x]);
             }
         }
-        startCell = new Cell(otherData.getStartCell());
-        finishCell = new Cell(otherData.getFinishCell());
+        path = new ArrayList<>();
+        startCell = field[otherData.getStartCell().getPosY()][otherData.getStartCell().getPosX()];
+        finishCell = field[otherData.getFinishCell().getPosY()][otherData.getFinishCell().getPosX()];
+        startCell.setStart(true);
+        finishCell.setFinish(true);
     }
 
     private int sizeY, sizeX;

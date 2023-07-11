@@ -11,6 +11,7 @@ public class GraphicsController implements ActionListener {
 
     MainController controller;
     ArrayList<JButton> listenedButtonsArray;
+    ArrayList<JButton> menuBarButtons;
     int iterator;
     DialogSizeInput dialog;
 
@@ -21,6 +22,7 @@ public class GraphicsController implements ActionListener {
 
     public void setListenedButtonsArray() {
         listenedButtonsArray = controller.getViewButtonPanelArray();
+        menuBarButtons = controller.getViewMenuBarArray();
     }
 
     @Override
@@ -36,19 +38,26 @@ public class GraphicsController implements ActionListener {
                 listenedButtonsArray.get(6).setVisible(false);
             } else if (e.getSource() == button && iterator == 2) { // resize
                 changeSizeField();
-            } else if (e.getSource() == button && iterator == 3) { // launch normal
+            } else if (e.getSource() == button && iterator == 3
+                    && controller.getFacade().CheckfDataCellStartFinish() == 0) { // launch normal
+                setMenuButtonsState(false);
                 controller.launchAStar();
-            } else if (e.getSource() == button && iterator == 4) { // launch step
+            } else if (e.getSource() == button && iterator == 4
+                    && controller.getFacade().CheckfDataCellStartFinish() == 0) { // launch step
                 setStateButtons(false);
                 listenedButtonsArray.get(5).setVisible(true);
                 listenedButtonsArray.get(5).setEnabled(true);
+                setMenuButtonsState(false);
                 controller.launchAStarStep();
             } else if (e.getSource() == button && iterator == 5) { // forward
                 controller.launchAStarStep();
             } else if (e.getSource() == button && iterator == 6) { // clear
                 controller.backupAction(false);
                 setStateButtons(true);
+                listenedButtonsArray.get(5).setEnabled(false);
+                listenedButtonsArray.get(5).setVisible(false);
                 button.setVisible(false);
+                setMenuButtonsState(true);
             }
         });
     }
@@ -59,10 +68,17 @@ public class GraphicsController implements ActionListener {
         });
     }
 
+    public void setMenuButtonsState(boolean state) {
+        menuBarButtons.forEach((button) -> {
+            button.setEnabled(state);
+        });
+    }
+
     private void changeSizeField() {
         setStateButtons(false);
         dialog = new DialogSizeInput(controller, this);
         dialog.init();
+        setStateButtons(true);
     }
 
     private void gResetField() {

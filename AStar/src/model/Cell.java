@@ -46,6 +46,14 @@ public class Cell implements Comparable<Cell> {
     public boolean isFinish() {
         return finish;
     }
+    
+    public void setStart(boolean start) {
+        this.start = start;
+    }
+
+    public void setFinish(boolean finish) {
+        this.finish = finish;
+    }
 
     public int getPosX() {
         return posX;

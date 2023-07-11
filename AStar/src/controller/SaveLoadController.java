@@ -37,18 +37,19 @@ public class SaveLoadController implements ActionListener {
 
         listenedButtonsArray.forEach((button) -> {
             iterator += 1;
-            if (e.getSource() == button && iterator == 0) { // save
-
+            if (e.getSource() == button && iterator == 0) { // save                
                 writer.fieldData = controller.getFacade().getfData();
-
-                try {
-                    writer.write();
-                } catch (IOException e1) {
-                    e1.printStackTrace();
+                int status = fileChooser.showSaveDialog(button);
+                if (status == JFileChooser.APPROVE_OPTION){
+                    writer.saveFile = fileChooser.getSelectedFile();
+                    try {
+                        writer.write();
+                    } catch (IOException e1) {
+                        e1.printStackTrace();
+                    }
                 }
-
             } else if (e.getSource() == button && iterator == 1) { // load
-                int status = fileChooser.showDialog(null, "Открыть файл");
+                int status = fileChooser.showDialog(null, "Загрузить граф");
                 if (status == JFileChooser.APPROVE_OPTION) {
                     File file = fileChooser.getSelectedFile();
                     if (file == null) {
