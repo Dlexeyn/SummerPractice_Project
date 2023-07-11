@@ -1,122 +1,213 @@
 package model;
 
-import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.EnumMap;
 
-public class FieldFacade{
-    private int sizeY, sizeX;
-    private Cell [] [] field;
-    private Cell startCell;
-    private Cell finishCell;
+public class FieldFacade {
+
+    private Data backupData;
+    private Data fData;
+    private AStar aStar = null;
 
     private static EnumMap<CellType, Integer> costTypeMap;
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
 
-    public FieldFacade(int sizeY, int sizeX, CellType [][] mapType){
-        this.sizeY = sizeY;
-        this.sizeX = sizeX;
-        this.field = new Cell[sizeY][sizeX];
-        for(int y = 0; y < sizeY; y++){
-            for(int x = 0; x < sizeX; x++)
-            {
+    public FieldFacade(int sizeY, int sizeX, CellType[][] mapType) {
+        initMap(sizeY, sizeX);
+
+        initEnumMap();
+        for (int y = 0; y < sizeY; y++) {
+            for (int x = 0; x < sizeX; x++) {
                 CellType curCellType = mapType[y][x];
                 changeVertex(x, y, curCellType);
-                if(curCellType == CellType.SOURCE_TYPE)
+                if (curCellType == CellType.SOURCE_TYPE)
                     setStart(x, y);
-                else if(curCellType == CellType.STOCK_TYPE)
+                else if (curCellType == CellType.STOCK_TYPE)
                     setFinish(x, y);
             }
         }
-
-        // init EnumMap
-        initEnumMap();
     }
 
-    public FieldFacade(int sizeY, int sizeX){
-        this.sizeY = sizeY;
-        this.sizeX = sizeX;
-        this.field = new Cell[sizeY][sizeX];
+    public FieldFacade(int sizeY, int sizeX) {
+
         costTypeMap = new EnumMap<>(CellType.class);
-
-        // init EnumMap
+        initMap(sizeY, sizeX);
         initEnumMap();
     }
 
-    private void initEnumMap()
-    {
+    private void initMap(int sizeY, int sizeX) {
+        fData = new Data(sizeX, sizeY);
+        for (int y = 0; y < sizeY; y++) {
+            for (int x = 0; x < sizeX; x++) {
+                fData.getField()[y][x] = new Cell(x, y);
+            }
+        }
+    }
+
+    public void setMap(int sizeY, int sizeX, CellType[][] mapType) {
+        initMap(sizeY, sizeX);
+        for (int y = 0; y < sizeY; y++) {
+            for (int x = 0; x < sizeX; x++) {
+                CellType curCellType = mapType[y][x];
+                changeVertex(x, y, curCellType);
+                if (curCellType == CellType.SOURCE_TYPE)
+                    setStart(x, y);
+                else if (curCellType == CellType.STOCK_TYPE)
+                    setFinish(x, y);
+            }
+        }
+        notify("Field", fData);
+    }
+
+    private void initEnumMap() {
+        costTypeMap = new EnumMap<>(CellType.class);
         int cost = 1;
-        for(CellType type : CellType.values())
+        for (CellType type : CellType.values())
             costTypeMap.put(type, cost++);
-        
+
         costTypeMap.put(CellType.BLOCK_TYPE, Integer.MAX_VALUE);
         costTypeMap.put(CellType.SOURCE_TYPE, -1);
         costTypeMap.put(CellType.STOCK_TYPE, -2);
     }
 
-    public void addPropertyChangeListener(PropertyChangeListener pListener)
-    {
+    public void addPropertyChangeListener(PropertyChangeListener pListener) {
         support.addPropertyChangeListener(pListener);
     }
 
-    public void removePropertyChangeListener(PropertyChangeListener pListener)
-    {
+    public void removePropertyChangeListener(PropertyChangeListener pListener) {
         support.removePropertyChangeListener(pListener);
     }
 
-    public Cell [] [] getField(){
-        return field;
+    public void notify(String message, Data data) {
+        support.firePropertyChange(message, null, data);
     }
 
-    // Оповестить визуализацию
-    public void resize(int sizeY, int sizeX)
-    {
-        this.sizeY = sizeY;
-        this.sizeX = sizeX;
-        this.field = new Cell[sizeY][sizeX];
+    public void resize(int sizeY, int sizeX) {
+        initMap(sizeY, sizeX);
+        notify("Size", fData);
     }
 
-    // Оповестить визуализацию
-    public void changeVertex(int posX, int posY, CellType newType)
-    {
-        field[posY][posX].setgCost(costTypeMap.get(newType));
-    }
-    // Оповестить визуализацию
-    public void setFinish(int posX, int posY)
-    {
-        if(finishCell != null)
-            finishCell.setgCost(1);
-
-        field[posY][posX].setgCost(costTypeMap.get(CellType.STOCK_TYPE));
-        finishCell = field[posY][posX];
+    public void fResetField() {
+        backupData = null;
+        initMap(fData.getSizeY(), fData.getSizeX());
+        notify("Size", fData);
     }
 
-    // Оповестить визуализацию
-    public void setStart(int posX, int posY)
-    {
-        if(startCell != null)
-            startCell.setgCost(1);
-
-        field[posY][posX].setgCost(costTypeMap.get(CellType.SOURCE_TYPE));
-        startCell = field[posY][posX];
+    public void changeVertex(int posX, int posY, CellType newType) {
+        Cell cell = fData.getField()[posY][posX];
+        cell.setSelfCost(costTypeMap.get(newType));
+        if(cell.isFinish()) {
+            cell.setFinish(false);
+            fData.setFinishCell(null);
+        }
+        if(cell.isStart()){
+            cell.setStart(false);
+            fData.setStartCell(null);
+        }
+        cell.setType(newType);
     }
 
-    // Оповестить визуализацию
-    public void startAlgorithm()
-    {
+    public void setFinish(int posX, int posY) {
+        if (fData.getFinishCell() != null){
+            fData.getFinishCell().setSelfCost(1);
+            fData.getFinishCell().setFinish(false);
+            fData.getFinishCell().setType(CellType.FIRST_TYPE);
+        }
+            
+
+        if (fData.getField()[posY][posX].getType() == CellType.SOURCE_TYPE) {
+            fData.getStartCell().setSelfCost(1);
+            fData.setStartCell(null);
+        }
+
+        fData.getField()[posY][posX].setSelfCost(costTypeMap.get(CellType.STOCK_TYPE));
+        fData.getField()[posY][posX].setType(CellType.STOCK_TYPE);
+        fData.setFinishCell(fData.getField()[posY][posX]);
+    }
+
+    public void setStart(int posX, int posY) {
+        if (fData.getStartCell() != null){
+            fData.getStartCell().setSelfCost(1);
+            fData.getStartCell().setStart(false);
+            fData.getStartCell().setType(CellType.FIRST_TYPE);
+        }
+            
+
+        if (fData.getField()[posY][posX].getType() == CellType.STOCK_TYPE) {
+            fData.getFinishCell().setSelfCost(1);
+            fData.setFinishCell(null);
+        }
+
+        fData.getField()[posY][posX].setSelfCost(costTypeMap.get(CellType.SOURCE_TYPE));
+        fData.getField()[posY][posX].setType(CellType.SOURCE_TYPE);
+        fData.setStartCell(fData.getField()[posY][posX]);
+    }
+
+    public void prepareAlgorithm(PropertyChangeListener viewListener) {
+        if (CheckfDataCellStartFinish() == 0) {
+            aStar = new AStar(fData, viewListener);
+        }
+    }
+
+    public void launchFullAlgorithm() {
+        Cell answer = aStar.solve(false);
+        generateAnswer(answer);
+        notify("FullAlgorithm", fData);
+    }
+
+    public void launchStepAlgorithm() {
+        Cell tempAnswer = aStar.solve(true);
+
+        if (aStar.isAnswered()) {
+            generateAnswer(tempAnswer);
+        }
 
     }
 
-    public int getSizeY() {
-        return sizeY;
+    public void generateAnswer(Cell answerCell) {
+        while (answerCell != null && answerCell.getParentCell() != null) {
+            if (!answerCell.isFinish())
+                fData.addToPath(answerCell);
+            answerCell = answerCell.getParentCell();
+        }
+
+        if (answerCell == null)
+            notify("NoPath", fData);
+        else
+            notify("Path", fData);
+
     }
 
-    public int getSizeX() {
-        return sizeX;
+    public boolean isStartedAStar() {
+        if (aStar == null)
+            return false;
+        return true;
     }
 
+    public Data getfData() {
+        return fData;
+    }
 
+    public int CheckfDataCellStartFinish() {
+        if (fData.getStartCell() == null) {
+            notify("NoStart", fData);
+            return -1;
+        } else if (fData.getFinishCell() == null) {
+            notify("NoFinish", fData);
+            return -2;
+        }
+        return 0;
+    }
 
-    
+    public void saveBackup() {
+        backupData = new Data(fData);
+    }
+
+    public void loadBackup() {
+        aStar = null;
+        fData = new Data(backupData);
+        notify("Field", fData);
+    }
+
 }
