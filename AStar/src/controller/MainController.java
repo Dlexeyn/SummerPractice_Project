@@ -44,7 +44,7 @@ public class MainController {
             facade = new FieldFacade(reader.getSizeY(), reader.getSizeX(), reader.getField());
         } catch (IOException e) {
             System.out.println("Файл сохранения поврежден или не обнаружен.");
-            facade = new FieldFacade(20, 20); // to do
+            facade = new FieldFacade(8, 15);
         } finally {
             facade.addPropertyChangeListener(view);
             facade.addPropertyChangeListener(view.getGraphPanel());

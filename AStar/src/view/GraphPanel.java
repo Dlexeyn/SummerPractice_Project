@@ -147,7 +147,7 @@ public class GraphPanel extends JPanel implements PropertyChangeListener {
             setParamsToCellView(cellsViewers[updatedCell.getPosY()][updatedCell.getPosX()], updatedCell);
         } else if (e.getPropertyName().equals("Path")) {
             for (Cell cell : newData.getPath()) {
-                cellsViewers[cell.getPosY()][cell.getPosX()].setBackground(Color.CYAN);
+                cellsViewers[cell.getPosY()][cell.getPosX()].setBackground(Color.cyan);
             }
 
         } else if (e.getPropertyName().equals("Step")) {

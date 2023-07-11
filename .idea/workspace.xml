@@ -1,21 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="SummerPractice_Project:jar" />
+    </artifacts-to-build>
+  </component>
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="db7524d2-11ca-42fe-9c16-1d26923e425e" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/AStar/src/controller/GraphicsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/AStar/src/controller/GraphicsController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AStar/src/controller/IOput/Reader.java" beforeDir="false" afterPath="$PROJECT_DIR$/AStar/src/controller/IOput/Reader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AStar/src/controller/SaveLoadController.java" beforeDir="false" afterPath="$PROJECT_DIR$/AStar/src/controller/SaveLoadController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AStar/src/model/Cell.java" beforeDir="false" afterPath="$PROJECT_DIR$/AStar/src/model/Cell.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AStar/src/model/Data.java" beforeDir="false" afterPath="$PROJECT_DIR$/AStar/src/model/Data.java" afterDir="false" />
+    <list default="true" id="1d2f2fa5-eaae-4620-88b2-f83984358504" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AStar/src/controller/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/AStar/src/controller/MainController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/AStar/src/model/FieldFacade.java" beforeDir="false" afterPath="$PROJECT_DIR$/AStar/src/model/FieldFacade.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AStar/src/view/CellViewer.java" beforeDir="false" afterPath="$PROJECT_DIR$/AStar/src/view/CellViewer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AStar/src/view/DialogSizeInput.java" beforeDir="false" afterPath="$PROJECT_DIR$/AStar/src/view/DialogSizeInput.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/AStar/src/view/GraphPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/AStar/src/view/GraphPanel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/AStar/src/view/View.java" beforeDir="false" afterPath="$PROJECT_DIR$/AStar/src/view/View.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/saved_graph.txt" beforeDir="false" afterPath="$PROJECT_DIR$/saved_graph.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SummerPractice_Project/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SummerPractice_Project/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SummerPractice_Project/controller/GraphicsController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SummerPractice_Project/controller/GraphicsController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SummerPractice_Project/controller/IOput/Reader.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SummerPractice_Project/controller/IOput/Reader.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SummerPractice_Project/controller/IOput/Writer.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SummerPractice_Project/controller/IOput/Writer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SummerPractice_Project/controller/MainController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SummerPractice_Project/controller/MainController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SummerPractice_Project/controller/SaveLoadController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SummerPractice_Project/controller/SaveLoadController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SummerPractice_Project/model/AStar$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SummerPractice_Project/model/AStar$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SummerPractice_Project/model/AStar.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SummerPractice_Project/model/AStar.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SummerPractice_Project/model/AStarAlgorithm.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SummerPractice_Project/model/Cell.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SummerPractice_Project/model/Cell.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SummerPractice_Project/model/Data.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SummerPractice_Project/model/Data.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SummerPractice_Project/model/FieldFacade.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SummerPractice_Project/model/FieldFacade.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SummerPractice_Project/view/CellViewer.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SummerPractice_Project/view/CellViewer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SummerPractice_Project/view/DialogSizeInput.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SummerPractice_Project/view/DialogSizeInput.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SummerPractice_Project/view/GraphPanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SummerPractice_Project/view/GraphPanel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SummerPractice_Project/view/View$ChooseColorListener.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SummerPractice_Project/view/View$ChooseColorListener.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SummerPractice_Project/view/View$GeneralListener.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SummerPractice_Project/view/View$GeneralListener.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/SummerPractice_Project/view/View.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SummerPractice_Project/view/View.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,7 +45,7 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="ProjectId" id="2SLGer6BArTtSLaIfpW3CaO2SBk" />
+  <component name="ProjectId" id="2SR2mW2G5S8DUgB4RfmFO91bJEc" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -37,59 +54,56 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "ToolWindowRun.ShowToolbar": "false",
     "WebServerToolWindowFactoryState": "false",
     "git-widget-placeholder": "testing",
-    "last_opened_file_path": "/home/leksil/Projects/Java/SummerPractice_FirstTask",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "project.structure.last.edited": "Artifacts",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "editor.preferences.fonts.default",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="RunManager">
-    <configuration name="Main" type="Application" factoryName="Application" nameIsGenerated="true">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Main" />
+      <module name="SummerPractice_Project" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Main" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="db7524d2-11ca-42fe-9c16-1d26923e425e" name="Changes" comment="" />
-      <created>1688918546795</created>
+      <changelist id="1d2f2fa5-eaae-4620-88b2-f83984358504" name="Changes" comment="" />
+      <created>1689095233021</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1688918546795</updated>
-      <workItem from="1688918556275" duration="1770000" />
-      <workItem from="1688999957630" duration="18000" />
-      <workItem from="1689067623575" duration="3320000" />
-      <workItem from="1689073482444" duration="697000" />
-      <workItem from="1689089429293" duration="411000" />
+      <updated>1689095233021</updated>
+      <workItem from="1689095241465" duration="3421000" />
+      <workItem from="1689106309014" duration="37000" />
+      <workItem from="1689106464790" duration="14000" />
+      <workItem from="1689106497122" duration="30000" />
+      <workItem from="1689106656205" duration="32000" />
+      <workItem from="1689106710015" duration="2907000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/AStar/src/view/View.java</url>
-          <line>270</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
-  </component>
-  <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/SummerPractice_Project$Main.ic" NAME="Main Coverage Results" MODIFIED="1689089598935" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>

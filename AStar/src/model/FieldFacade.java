@@ -97,6 +97,14 @@ public class FieldFacade {
     public void changeVertex(int posX, int posY, CellType newType) {
         Cell cell = fData.getField()[posY][posX];
         cell.setSelfCost(costTypeMap.get(newType));
+        if(cell.isFinish()) {
+            cell.setFinish(false);
+            fData.setFinishCell(null);
+        }
+        if(cell.isStart()){
+            cell.setStart(false);
+            fData.setStartCell(null);
+        }
         cell.setType(newType);
     }
 

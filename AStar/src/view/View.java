@@ -3,6 +3,7 @@ package view;
 import java.util.*;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
@@ -118,37 +119,33 @@ public class View extends JFrame implements PropertyChangeListener {
     }
 
     public void prepareButtonPanel(ActionListener aListener) {
-
-        Dimension buttonSize = new Dimension(140, 80);
-
         buttonPanelArray = new ArrayList<JButton>();
-        buttonReset = new JButton("Сброс");
-        buttonReset.setPreferredSize(buttonSize);
-        buttonSetSize = new JButton("Задать размер графа");
-        buttonSetSize.setPreferredSize(buttonSize);
-        buttonChooseColor = new JButton("Редактировать");
+
+        buttonChooseColor = new JButton("", new ImageIcon("AStar/src/icons/pencil.png"));
+        initPanelButton("Редактировать", buttonChooseColor);
         buttonChooseColor.addActionListener(chooseColorListener);
-        buttonChooseColor.setPreferredSize(buttonSize);
-        buttonLaunchNormal = new JButton("Запустить");
-        buttonLaunchNormal.setPreferredSize(buttonSize);
-        buttonLaunchStep = new JButton("Запустить пошагово");
-        buttonLaunchStep.setPreferredSize(buttonSize);
-        buttonForward = new JButton("Шаг вперёд");
-        buttonForward.setPreferredSize(buttonSize);
+
+        buttonReset = new JButton("", new ImageIcon("AStar/src/icons/reset.png"));
+        initPanelButton("Сброс", buttonReset);
+
+        buttonSetSize = new JButton("", new ImageIcon("AStar/src/icons/resize.png"));
+        initPanelButton("Задать размер графа", buttonSetSize);
+
+        buttonLaunchNormal = new JButton("", new ImageIcon("AStar/src/icons/play-and-pause-button.png"));
+        initPanelButton("Запустить", buttonLaunchNormal);
+
+        buttonLaunchStep = new JButton("", new ImageIcon("AStar/src/icons/footsteps.png"));
+        initPanelButton("Запустить пошагово", buttonLaunchStep);
+
+        buttonForward = new JButton("", new ImageIcon("AStar/src/icons/play.png"));
+        initPanelButton("Шаг вперёд", buttonForward);
         buttonForward.setVisible(false);
-        buttonClearSolver = new JButton("Очистить решение");
-        buttonClearSolver.setPreferredSize(buttonSize);
+
+        buttonClearSolver = new JButton("", new ImageIcon("AStar/src/icons/broom.png"));
+        initPanelButton("Очистить решение", buttonClearSolver);
         buttonClearSolver.setVisible(false);
 
         buttonPanel = new JPanel(new GridLayout(7, 1, 0, 20));
-
-        buttonPanelArray.add(buttonChooseColor);
-        buttonPanelArray.add(buttonReset);
-        buttonPanelArray.add(buttonSetSize);
-        buttonPanelArray.add(buttonLaunchNormal);
-        buttonPanelArray.add(buttonLaunchStep);
-        buttonPanelArray.add(buttonForward);
-        buttonPanelArray.add(buttonClearSolver);
 
         buttonPanelArray.forEach((button) -> {
             buttonPanel.add(button);
@@ -158,6 +155,13 @@ public class View extends JFrame implements PropertyChangeListener {
 
     }
 
+    private void initPanelButton(String tipText, JButton button){
+        Dimension buttonSize = new Dimension(140, 80);
+        button.setPreferredSize(buttonSize);
+        button.setToolTipText(tipText);
+        buttonPanelArray.add(button);
+    }
+
     public GraphPanel getGraphPanel() {
         return graphPanel;
     }
@@ -165,49 +169,31 @@ public class View extends JFrame implements PropertyChangeListener {
     public void prepareColorsPanel(ActionListener cListener, ActionListener globalListener) {
         colorButtonPanelArray = new ArrayList<>();
         button_WHITE_WITH_YELLOW = new JToggleButton("1", false);
-        button_WHITE_WITH_YELLOW.setBackground(Colors.WHITE_WITH_YELLOW.getColor());
-        button_WHITE_WITH_YELLOW
-                .setBorder(BorderFactory.createLineBorder(Colors.WHITE_WITH_YELLOW.getColor(), 3, true));
+        initColorChoiceButton(Colors.WHITE_WITH_YELLOW.getColor(), button_WHITE_WITH_YELLOW);
 
         button_LIGHT_YELLOW = new JToggleButton("2", false);
-        button_LIGHT_YELLOW.setBackground(Colors.LIGHT_YELLOW.getColor());
-        button_LIGHT_YELLOW.setBorder(BorderFactory.createLineBorder(Colors.LIGHT_YELLOW.getColor(), 3, true));
+        initColorChoiceButton(Colors.LIGHT_YELLOW.getColor(), button_LIGHT_YELLOW);
 
         button_ORANGE = new JToggleButton("3", false);
-        button_ORANGE.setBackground(Colors.ORANGE.getColor());
-        button_ORANGE.setBorder(BorderFactory.createLineBorder(Colors.ORANGE.getColor(), 3, true));
+        initColorChoiceButton(Colors.ORANGE.getColor(), button_ORANGE);
 
         button_DARK_ORANGE = new JToggleButton("4", false);
-        button_DARK_ORANGE.setBackground(Colors.DARK_ORANGE.getColor());
-        button_DARK_ORANGE.setBorder(BorderFactory.createLineBorder(Colors.DARK_ORANGE.getColor(), 3, true));
+        initColorChoiceButton(Colors.DARK_ORANGE.getColor(), button_DARK_ORANGE);
 
         button_BROWN = new JToggleButton("5", false);
-        button_BROWN.setBackground(Colors.BROWN.getColor());
-        button_BROWN.setBorder(BorderFactory.createLineBorder(Colors.BROWN.getColor(), 3, true));
+        initColorChoiceButton(Colors.BROWN.getColor(), button_BROWN);
 
         button_GREY = new JToggleButton("Блок", false);
-        button_GREY.setBackground(Colors.GREY.getColor());
-        button_GREY.setBorder(BorderFactory.createLineBorder(Colors.GREY.getColor(), 3, true));
+        initColorChoiceButton(Colors.GREY.getColor(), button_GREY);
 
         buttonPosStart = new JToggleButton("Старт", false);
-        buttonPosStart.setBackground(Color.GREEN);
-        buttonPosStart.setBorder(BorderFactory.createLineBorder(Color.GREEN, 3, true));
+        initColorChoiceButton(Color.GREEN, buttonPosStart);
 
         buttonPosFinish = new JToggleButton("Финиш", false);
-        buttonPosFinish.setBackground(Color.RED);
-        buttonPosFinish.setBorder(BorderFactory.createLineBorder(Color.RED, 3, true));
-
-        colorButtonPanelArray.add(button_WHITE_WITH_YELLOW);
-        colorButtonPanelArray.add(button_LIGHT_YELLOW);
-        colorButtonPanelArray.add(button_ORANGE);
-        colorButtonPanelArray.add(button_DARK_ORANGE);
-        colorButtonPanelArray.add(button_BROWN);
-        colorButtonPanelArray.add(button_GREY);
-        colorButtonPanelArray.add(buttonPosStart);
-        colorButtonPanelArray.add(buttonPosFinish);
+        initColorChoiceButton(Color.RED, buttonPosFinish);
 
         colorsPanel = new JPanel(new GridLayout(4, 2, 20, 20));
-        colorsPanel.setBorder(BorderFactory.createLineBorder(Color.GRAY, 3, false));
+        colorsPanel.setBorder ( new TitledBorder ( new EtchedBorder (), "Набор вершин" ) );
 
         colorButtonPanelArray.forEach((button) -> {
             colorsPanel.add(button);
@@ -217,6 +203,14 @@ public class View extends JFrame implements PropertyChangeListener {
 
         lastChoiceButton = button_WHITE_WITH_YELLOW;
     }
+
+    private void initColorChoiceButton(Color color, JToggleButton button){
+        button.setBackground(color);
+        button.setBorder(BorderFactory.createLineBorder(color, 3, true));
+        colorButtonPanelArray.add(button);
+    }
+
+
 
     private void prepareMenuBar(ActionListener fListener) {
 
@@ -236,8 +230,9 @@ public class View extends JFrame implements PropertyChangeListener {
     }
 
     private void prepareTextPanel() {
+        Border grayline = BorderFactory.createLineBorder(Color.gray, 3);
         textPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        textPanel.setBorder ( new TitledBorder ( new EtchedBorder (), "Display Area" ) );
+        textPanel.setBorder ( BorderFactory.createTitledBorder( grayline, "Вывод"));
         
         outText = new OutTextArea(7, 95);
         
@@ -274,7 +269,7 @@ public class View extends JFrame implements PropertyChangeListener {
         public void actionPerformed(ActionEvent e) {
             if (isPressed == false) {
                 colorsPanel.setVisible(true);
-                buttonChooseColor.setText("Закончить редактирование");
+                buttonChooseColor.setIcon(new ImageIcon("AStar/src/icons/delete.png"));
                 buttonPanelArray.forEach((button) -> {
                     if (button != buttonChooseColor)
                         button.setEnabled(false);
@@ -282,7 +277,7 @@ public class View extends JFrame implements PropertyChangeListener {
 
                 graphPanel.updateListener();
             } else {
-                buttonChooseColor.setText("Редактировать");
+                buttonChooseColor.setIcon(new ImageIcon("AStar/src/icons/pencil.png"));
                 colorsPanel.setVisible(false);
                 buttonPanelArray.forEach((button) -> {
                     if (button != buttonChooseColor)
