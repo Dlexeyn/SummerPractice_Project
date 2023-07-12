@@ -103,7 +103,7 @@ public class AStar {
             case STOCK_TYPE:
                 return 0;
         }
-        return 0;
+        return 1;
     }
 
     public int calculateHeuristic(int posX, int posY) {

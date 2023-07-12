@@ -144,6 +144,50 @@ public class FieldFacade {
         fData.setStartCell(fData.getField()[posY][posX]);
     }
 
+    public void setTargetVertex(int posX, int posY, boolean isStart){
+        Cell target;
+        Cell opposedTarget;
+        CellType opposedType;
+        CellType type;
+        if(isStart){
+            target = fData.getStartCell();
+            type = CellType.SOURCE_TYPE;
+            opposedTarget = fData.getFinishCell();
+            opposedType = CellType.STOCK_TYPE;
+        } else {
+            target = fData.getFinishCell();
+            type = CellType.STOCK_TYPE;
+            opposedTarget = fData.getStartCell();
+            opposedType = CellType.SOURCE_TYPE;
+        }
+        setDefaultVertex(target);
+
+        if(fData.getField()[posY][posX].getType() == opposedType){
+            opposedTarget.setSelfCost(1);
+            opposedTarget = null;
+            if(isStart)
+                fData.setFinishCell(opposedTarget);
+            else
+                fData.setStartCell(opposedTarget);
+        }
+
+        fData.getField()[posY][posX].setSelfCost(costTypeMap.get(type));
+        fData.getField()[posY][posX].setType(type);
+        if(isStart)
+            fData.setStartCell(fData.getField()[posY][posX]);
+        else
+            fData.setFinishCell(fData.getField()[posY][posX]);
+    }
+
+    private void setDefaultVertex(Cell curCell){
+        if(curCell != null){
+            curCell.setSelfCost(1);
+            curCell.setStart(false);
+            curCell.setFinish(false);
+            curCell.setType(CellType.FIRST_TYPE);
+        }
+    }
+
     public void prepareAlgorithm(PropertyChangeListener viewListener) {
         if (CheckfDataCellStartFinish() == 0) {
             aStar = new AStar(fData, viewListener);

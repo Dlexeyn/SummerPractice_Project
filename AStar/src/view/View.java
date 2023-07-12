@@ -80,7 +80,6 @@ public class View extends JFrame implements PropertyChangeListener {
         setVisible(true);
     }
 
-
     private void setupLayout() {
         viewLayout = new GroupLayout(this.getContentPane());
         this.getContentPane().setLayout(viewLayout);
@@ -112,10 +111,6 @@ public class View extends JFrame implements PropertyChangeListener {
         generalListener = new GeneralListener();
         chooseColorListener = new ChooseColorListener();
         graphPanel = new GraphPanel();
-    }
-
-    public void start() {
-
     }
 
     public void prepareButtonPanel(ActionListener aListener) {
@@ -169,28 +164,28 @@ public class View extends JFrame implements PropertyChangeListener {
     public void prepareColorsPanel(ActionListener cListener, ActionListener globalListener) {
         colorButtonPanelArray = new ArrayList<>();
         button_WHITE_WITH_YELLOW = new JToggleButton("1", false);
-        initColorChoiceButton(Colors.WHITE_WITH_YELLOW.getColor(), button_WHITE_WITH_YELLOW);
+        initColorChoiceButton(Colors.WHITE_WITH_GREEN.getColor(), button_WHITE_WITH_YELLOW);
 
         button_LIGHT_YELLOW = new JToggleButton("2", false);
-        initColorChoiceButton(Colors.LIGHT_YELLOW.getColor(), button_LIGHT_YELLOW);
+        initColorChoiceButton(Colors.LIGHT_GREEN.getColor(), button_LIGHT_YELLOW);
 
         button_ORANGE = new JToggleButton("3", false);
-        initColorChoiceButton(Colors.ORANGE.getColor(), button_ORANGE);
+        initColorChoiceButton(Colors.GREEN.getColor(), button_ORANGE);
 
         button_DARK_ORANGE = new JToggleButton("4", false);
-        initColorChoiceButton(Colors.DARK_ORANGE.getColor(), button_DARK_ORANGE);
+        initColorChoiceButton(Colors.DARK_GREEN.getColor(), button_DARK_ORANGE);
 
         button_BROWN = new JToggleButton("5", false);
-        initColorChoiceButton(Colors.BROWN.getColor(), button_BROWN);
+        initColorChoiceButton(Colors.DARKEST_GREEN.getColor(), button_BROWN);
 
         button_GREY = new JToggleButton("Блок", false);
         initColorChoiceButton(Colors.GREY.getColor(), button_GREY);
 
         buttonPosStart = new JToggleButton("Старт", false);
-        initColorChoiceButton(Color.GREEN, buttonPosStart);
+        initColorChoiceButton(Colors.START.getColor(), buttonPosStart);
 
         buttonPosFinish = new JToggleButton("Финиш", false);
-        initColorChoiceButton(Color.RED, buttonPosFinish);
+        initColorChoiceButton(Colors.STOCK.getColor(), buttonPosFinish);
 
         colorsPanel = new JPanel(new GridLayout(4, 2, 20, 20));
         colorsPanel.setBorder ( new TitledBorder ( new EtchedBorder (), "Набор вершин" ) );
@@ -235,17 +230,13 @@ public class View extends JFrame implements PropertyChangeListener {
         textPanel.setBorder ( BorderFactory.createTitledBorder( grayline, "Вывод"));
         
         outText = new OutTextArea(7, 95);
-        
-
         outText.setFont(new Font("Dialog", Font.PLAIN, 18));
         outText.setTabSize(10);
         outText.setEditable(false);
-        //outText.setBorder(BorderFactory.createLineBorder(Color.GRAY, 3, false));
         outText.setLineWrap(true);
 
         scrollPane = new JScrollPane(outText);
         scrollPane.setVerticalScrollBarPolicy ( ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS );
-        //textPanel.add(outText, BorderLayout.CENTER);
         textPanel.add(scrollPane);
         colorsPanel.setVisible(false);
     }

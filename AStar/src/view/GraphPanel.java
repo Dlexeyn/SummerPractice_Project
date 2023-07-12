@@ -147,7 +147,7 @@ public class GraphPanel extends JPanel implements PropertyChangeListener {
             setParamsToCellView(cellsViewers[updatedCell.getPosY()][updatedCell.getPosX()], updatedCell);
         } else if (e.getPropertyName().equals("Path")) {
             for (Cell cell : newData.getPath()) {
-                cellsViewers[cell.getPosY()][cell.getPosX()].setBackground(Color.cyan);
+                cellsViewers[cell.getPosY()][cell.getPosX()].setBackground(new Color(247,244,139));
             }
 
         } else if (e.getPropertyName().equals("Step")) {
@@ -155,15 +155,14 @@ public class GraphPanel extends JPanel implements PropertyChangeListener {
                 cellsViewers[cell.getPosY()][cell.getPosX()].addParams(cell.getSelfCost(), cell.getHCost(),
                         cell.getFCost());
                 cellsViewers[cell.getPosY()][cell.getPosX()]
-                        .setBorder(BorderFactory.createLineBorder(Color.GREEN, 4, false));
+                        .setBorder(BorderFactory.createLineBorder(new Color(153, 233, 28), 4, false));
             }
             if (targetCellViewer != null) {
-                targetCellViewer.setBorder(BorderFactory.createLineBorder(Color.GREEN, 4, false));
+                targetCellViewer.setBorder(BorderFactory.createLineBorder(new Color(153, 233, 28), 4, false));
             }
             if (newData.getCurCell() != null) {
                 targetCellViewer = cellsViewers[newData.getCurCell().getPosY()][newData.getCurCell().getPosX()];
-                // targetCellViewer.setBorderPainted(true);
-                targetCellViewer.setBorder(BorderFactory.createLineBorder(Color.BLUE, 4, false));
+                targetCellViewer.setBorder(BorderFactory.createLineBorder(new Color(247,244,139), 6, false));
             }
 
         } else if (e.getPropertyName().equals("FullAlgorithm")) {
