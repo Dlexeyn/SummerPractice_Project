@@ -121,27 +121,27 @@ public class View extends JFrame implements PropertyChangeListener {
     public void prepareButtonPanel(ActionListener aListener) {
         buttonPanelArray = new ArrayList<JButton>();
 
-        buttonChooseColor = new JButton("", new ImageIcon("AStar/src/icons/pencil.png"));
+        buttonChooseColor = new JButton("", new ImageIcon(this.getClass().getResource("/icons/pencil.png")));
         initPanelButton("Редактировать", buttonChooseColor);
         buttonChooseColor.addActionListener(chooseColorListener);
 
-        buttonReset = new JButton("", new ImageIcon("AStar/src/icons/reset.png"));
+        buttonReset = new JButton("", new ImageIcon(this.getClass().getResource("/icons/reset.png")));
         initPanelButton("Сброс", buttonReset);
 
-        buttonSetSize = new JButton("", new ImageIcon("AStar/src/icons/resize.png"));
+        buttonSetSize = new JButton("", new ImageIcon(this.getClass().getResource("/icons/resize.png")));
         initPanelButton("Задать размер графа", buttonSetSize);
 
-        buttonLaunchNormal = new JButton("", new ImageIcon("AStar/src/icons/play-and-pause-button.png"));
+        buttonLaunchNormal = new JButton("", new ImageIcon(this.getClass().getResource("/icons/play-and-pause-button.png")));
         initPanelButton("Запустить", buttonLaunchNormal);
 
-        buttonLaunchStep = new JButton("", new ImageIcon("AStar/src/icons/footsteps.png"));
+        buttonLaunchStep = new JButton("", new ImageIcon(this.getClass().getResource("/icons/footsteps.png")));
         initPanelButton("Запустить пошагово", buttonLaunchStep);
 
-        buttonForward = new JButton("", new ImageIcon("AStar/src/icons/play.png"));
+        buttonForward = new JButton("", new ImageIcon(this.getClass().getResource("/icons/play.png")));
         initPanelButton("Шаг вперёд", buttonForward);
         buttonForward.setVisible(false);
 
-        buttonClearSolver = new JButton("", new ImageIcon("AStar/src/icons/broom.png"));
+        buttonClearSolver = new JButton("", new ImageIcon(this.getClass().getResource("/icons/broom.png")));
         initPanelButton("Очистить решение", buttonClearSolver);
         buttonClearSolver.setVisible(false);
 
@@ -269,7 +269,7 @@ public class View extends JFrame implements PropertyChangeListener {
         public void actionPerformed(ActionEvent e) {
             if (isPressed == false) {
                 colorsPanel.setVisible(true);
-                buttonChooseColor.setIcon(new ImageIcon("AStar/src/icons/delete.png"));
+                buttonChooseColor.setIcon(new ImageIcon(this.getClass().getResource("/icons/delete.png")));
                 buttonPanelArray.forEach((button) -> {
                     if (button != buttonChooseColor)
                         button.setEnabled(false);
@@ -277,7 +277,7 @@ public class View extends JFrame implements PropertyChangeListener {
 
                 graphPanel.updateListener();
             } else {
-                buttonChooseColor.setIcon(new ImageIcon("AStar/src/icons/pencil.png"));
+                buttonChooseColor.setIcon(new ImageIcon(this.getClass().getResource("/icons/pencil.png")));
                 colorsPanel.setVisible(false);
                 buttonPanelArray.forEach((button) -> {
                     if (button != buttonChooseColor)
