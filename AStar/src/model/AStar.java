@@ -99,9 +99,9 @@ public class AStar {
             case BLOCK_TYPE:
                 return 0;
             case SOURCE_TYPE:
-                return 0;
+                return 1;
             case STOCK_TYPE:
-                return 0;
+                return 1;
         }
         return 1;
     }
