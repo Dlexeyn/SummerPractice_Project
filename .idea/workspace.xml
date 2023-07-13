@@ -9,9 +9,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="aa484341-15f5-4506-ae4d-3d3e840a7c3e" name="Changes" comment="add icons">
+    <list default="true" id="aa484341-15f5-4506-ae4d-3d3e840a7c3e" name="Changes" comment="fix bug AStar">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/SummerPractice_Project/model/AStar.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/SummerPractice_Project/model/AStar.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AStar/src/model/AStar.java" beforeDir="false" afterPath="$PROJECT_DIR$/AStar/src/model/AStar.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AStar/src/view/DialogSizeInput.java" beforeDir="false" afterPath="$PROJECT_DIR$/AStar/src/view/DialogSizeInput.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,7 +73,7 @@
       <workItem from="1689148142694" duration="3498000" />
       <workItem from="1689152148412" duration="1447000" />
       <workItem from="1689173172449" duration="4506000" />
-      <workItem from="1689238286242" duration="1922000" />
+      <workItem from="1689238286242" duration="4476000" />
     </task>
     <task id="LOCAL-00001" summary="change color interface">
       <created>1689173220044</created>
@@ -88,7 +89,14 @@
       <option name="project" value="LOCAL" />
       <updated>1689173395596</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="fix bug AStar">
+      <created>1689240482764</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1689240482764</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -97,6 +105,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="change color interface" />
     <MESSAGE value="add icons" />
-    <option name="LAST_COMMIT_MESSAGE" value="add icons" />
+    <MESSAGE value="fix bug AStar" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix bug AStar" />
   </component>
 </project>

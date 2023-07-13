@@ -165,6 +165,7 @@ public class AStar {
     public PriorityQueue<Cell> getOpenList() {
         return openList;
     }
+    
     public boolean isAnswered() {
         return isAnswer;
     }

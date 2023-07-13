@@ -10,7 +10,7 @@ import controller.MainController;
 
 public class DialogSizeInput {
 
-    public JFrame frame;
+    JFrame frame;
 
     JPanel labelPanel;
     JPanel textFieldPanel;
