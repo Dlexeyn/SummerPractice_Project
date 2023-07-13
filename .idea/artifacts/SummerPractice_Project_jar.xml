@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="SummerPractice_Project:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/SummerPractice_Project_jar</output-path>
+    <root id="archive" name="SummerPractice_Project.jar">
+      <element id="module-output" name="SummerPractice_Project" />
+    </root>
+  </artifact>
+</component>

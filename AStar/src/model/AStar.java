@@ -99,11 +99,11 @@ public class AStar {
             case BLOCK_TYPE:
                 return 0;
             case SOURCE_TYPE:
-                return 0;
+                return 1;
             case STOCK_TYPE:
-                return 0;
+                return 1;
         }
-        return 0;
+        return 1;
     }
 
     public int calculateHeuristic(int posX, int posY) {
@@ -165,6 +165,7 @@ public class AStar {
     public PriorityQueue<Cell> getOpenList() {
         return openList;
     }
+    
     public boolean isAnswered() {
         return isAnswer;
     }

@@ -3,14 +3,14 @@ package view;
 import java.awt.Color;
 
 public enum Colors {
-    WHITE_WITH_YELLOW(254, 247, 235),
-    LIGHT_YELLOW(249, 204, 121),
-    ORANGE(245, 171, 35),
-    DARK_ORANGE(194, 128, 9),
-    BROWN(140, 93, 7),
+    WHITE_WITH_GREEN(215,251,232),
+    LIGHT_GREEN(157,243,196),
+    GREEN(98,210,162),
+    DARK_GREEN(31,171,137),
+    DARKEST_GREEN(47,131,111),
     GREY(142, 142, 147),
-    GREEN(76, 217, 100),
-    RED(255, 59, 48);
+    START(227,38,54),
+    STOCK(106,90,205);
 
 
     private final int r;

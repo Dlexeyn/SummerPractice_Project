@@ -64,10 +64,12 @@ public class MainController {
             facade.getfData().setUpdatedCell(posX, posY);
             facade.notify("Vertex", facade.getfData());
         } else if (newType == CellType.SOURCE_TYPE) {
-            facade.setStart(posX, posY);
+            //facade.setStart(posX, posY);
+            facade.setTargetVertex(posX, posY, true);
             facade.notify("Start", facade.getfData());
         } else {
-            facade.setFinish(posX, posY);
+            //facade.setFinish(posX, posY);
+            facade.setTargetVertex(posX, posY, false);
             facade.notify("Finish", facade.getfData());
         }
     }
